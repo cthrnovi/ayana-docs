@@ -1,0 +1,1564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AYANA Rewards — Voucher Redemption & Utilization Flow</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+  :root {
+    --blue: #1B4F72;
+    --dark: #2C3E50;
+    --accent: #2980B9;
+    --teal: #0F6E56;
+    --purple: #6C3483;
+    --coral: #C0392B;
+    --amber: #D4AC0D;
+    --gray-50: #F8F9FA;
+    --gray-100: #F1F3F5;
+    --gray-200: #E9ECEF;
+    --gray-300: #DEE2E6;
+    --gray-400: #ADB5BD;
+    --gray-600: #6C757D;
+    --gray-800: #343A40;
+    --font: 'Plus Jakarta Sans', -apple-system, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font);
+    color: var(--gray-800);
+    line-height: 1.7;
+    background: #fff;
+    font-size: 15px;
+  }
+
+  .page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 60px 48px;
+  }
+
+  /* --- COVER --- */
+  .cover {
+    min-height: 40vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 0 60px;
+    border-bottom: 3px solid var(--blue);
+    margin-bottom: 48px;
+  }
+  .cover-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+  .cover h1 {
+    font-size: 42px;
+    font-weight: 700;
+    color: var(--blue);
+    line-height: 1.15;
+    margin-bottom: 12px;
+  }
+  .cover h2 {
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--gray-600);
+    margin-bottom: 24px;
+  }
+  .cover-meta {
+    font-size: 13px;
+    color: var(--gray-400);
+  }
+
+  /* --- SECTIONS --- */
+  .section { margin-bottom: 56px; }
+  .section-num {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  h2.section-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--blue);
+    margin-bottom: 20px;
+    line-height: 1.25;
+  }
+  h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--dark);
+    margin: 32px 0 14px;
+  }
+  h4 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--dark);
+    margin: 24px 0 10px;
+  }
+  p { margin-bottom: 14px; }
+  .muted { color: var(--gray-600); }
+  .small { font-size: 13px; }
+
+  /* --- FLOW DIAGRAMS --- */
+  .flow-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 24px 0;
+  }
+  .flow-step {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    position: relative;
+  }
+  .flow-num {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--blue);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 14px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+  .flow-body {
+    flex: 1;
+    padding-bottom: 24px;
+  }
+  .flow-step:not(:last-child) .flow-body {
+    border-left: none;
+  }
+  .flow-step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 17px;
+    top: 36px;
+    bottom: 0;
+    width: 2px;
+    background: var(--gray-200);
+  }
+  .flow-title {
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--dark);
+    margin-bottom: 4px;
+  }
+  .flow-desc {
+    font-size: 14px;
+    color: var(--gray-600);
+    line-height: 1.6;
+  }
+
+  /* --- CARDS --- */
+  .card-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 20px 0;
+  }
+  .card-grid.single { grid-template-columns: 1fr; }
+  .card {
+    border-radius: 12px;
+    padding: 24px;
+    border: 1px solid var(--gray-200);
+    background: #fff;
+  }
+  .card-accent {
+    border-left: 4px solid var(--accent);
+  }
+  .card-teal { border-left: 4px solid var(--teal); background: #F0FAF6; }
+  .card-purple { border-left: 4px solid var(--purple); background: #F8F0FC; }
+  .card-coral { border-left: 4px solid var(--coral); background: #FDF2F0; }
+  .card-amber { border-left: 4px solid var(--amber); background: #FEFCF0; }
+  .card-blue { border-left: 4px solid var(--accent); background: #F0F7FD; }
+  .card-green { border-left: 4px solid var(--teal); }
+  .card-gray { background: var(--gray-50); border-color: var(--gray-200); }
+  .card-title {
+    font-weight: 600;
+    font-size: 15px;
+    margin-bottom: 6px;
+    color: var(--dark);
+  }
+  .card-desc {
+    font-size: 13.5px;
+    color: var(--gray-600);
+    line-height: 1.6;
+  }
+
+  /* --- TAGS --- */
+  .tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 100px;
+    margin: 2px 2px;
+  }
+  .tag-purple { background: #E8DAEF; color: #6C3483; }
+  .tag-teal { background: #D1F2EB; color: #0E6251; }
+  .tag-blue { background: #D6EAF8; color: #1A5276; }
+  .tag-amber { background: #FEF5E7; color: #7D6608; }
+  .tag-red { background: #FADBD8; color: #922B21; }
+  .tag-green { background: #D5F5E3; color: #1E8449; }
+  .tag-gray { background: var(--gray-200); color: var(--gray-600); }
+
+  /* --- METRIC CARDS --- */
+  .metric-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 20px 0;
+  }
+  .metric {
+    background: var(--gray-50);
+    border-radius: 12px;
+    padding: 20px 24px;
+    text-align: center;
+  }
+  .metric-num {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--blue);
+    line-height: 1.1;
+  }
+  .metric-label {
+    font-size: 13px;
+    color: var(--gray-600);
+    margin-top: 4px;
+  }
+
+  /* --- TABLES --- */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 13.5px;
+  }
+  th {
+    background: var(--blue);
+    color: #fff;
+    font-weight: 600;
+    text-align: left;
+    padding: 12px 14px;
+    font-size: 12px;
+    letter-spacing: 0.02em;
+  }
+  th:first-child { border-radius: 8px 0 0 0; }
+  th:last-child { border-radius: 0 8px 0 0; }
+  td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--gray-200);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  tr:nth-child(even) td { background: var(--gray-50); }
+  tr:last-child td:first-child { border-radius: 0 0 0 8px; }
+  tr:last-child td:last-child { border-radius: 0 0 8px 0; }
+
+  /* --- COMPARISON --- */
+  .compare-row {
+    display: grid;
+    grid-template-columns: 200px 1fr 1fr;
+    border-bottom: 1px solid var(--gray-200);
+  }
+  .compare-row.header {
+    background: var(--blue);
+    color: #fff;
+    font-weight: 600;
+    font-size: 13px;
+    border-radius: 8px 8px 0 0;
+  }
+  .compare-cell {
+    padding: 14px 16px;
+    font-size: 13.5px;
+    line-height: 1.5;
+  }
+  .compare-row:not(.header):nth-child(even) { background: var(--gray-50); }
+  .compare-row:last-child { border-radius: 0 0 8px 8px; }
+  .compare-label { font-weight: 600; color: var(--dark); }
+
+  /* --- METHOD CARDS (large) --- */
+  .method-card {
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin: 16px 0;
+    border: 1px solid var(--gray-200);
+    position: relative;
+    overflow: hidden;
+  }
+  .method-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 5px;
+  }
+  .method-1::before { background: var(--teal); }
+  .method-1 { background: linear-gradient(135deg, #F0FAF6, #fff); }
+  .method-2::before { background: var(--accent); }
+  .method-2 { background: linear-gradient(135deg, #F0F7FD, #fff); }
+  .method-3::before { background: var(--gray-600); }
+  .method-3 { background: linear-gradient(135deg, var(--gray-50), #fff); }
+  .method-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 100px;
+    margin-bottom: 10px;
+  }
+  .method-1 .method-badge { background: #D1F2EB; color: #0E6251; }
+  .method-2 .method-badge { background: #D6EAF8; color: #1A5276; }
+  .method-name {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 6px;
+  }
+  .method-sub {
+    font-size: 14px;
+    color: var(--gray-600);
+    margin-bottom: 16px;
+  }
+  .method-detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 16px;
+  }
+  .method-detail {
+    background: rgba(255,255,255,0.7);
+    border-radius: 10px;
+    padding: 16px;
+    border: 1px solid var(--gray-200);
+  }
+  .method-detail-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--gray-400);
+    margin-bottom: 6px;
+  }
+  .method-detail-content {
+    font-size: 13.5px;
+    color: var(--gray-800);
+    line-height: 1.6;
+  }
+
+  /* --- THREAT CARDS --- */
+  .threat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 16px 0;
+  }
+  .threat-card {
+    border-radius: 12px;
+    padding: 20px 24px;
+    border: 1px solid var(--gray-200);
+  }
+  .threat-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .threat-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .threat-blocked .threat-icon { background: #FADBD8; color: #C0392B; }
+  .threat-accepted .threat-icon { background: #FEF5E7; color: #D4AC0D; }
+  .threat-name { font-weight: 600; font-size: 14px; }
+
+  /* --- CALLOUT --- */
+  .callout {
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin: 20px 0;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .callout-blue { background: #EBF5FB; border: 1px solid #AED6F1; }
+  .callout-green { background: #EAFAF1; border: 1px solid #ABEBC6; }
+  .callout-amber { background: #FEF9E7; border: 1px solid #F9E79F; }
+  .callout-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+  .callout-body { font-size: 14px; line-height: 1.6; }
+
+  /* --- OR DIVIDER --- */
+  .or-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 12px 0;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gray-400);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .or-divider::before, .or-divider::after {
+    content: '';
+    flex: 1;
+    border-top: 1px dashed var(--gray-300);
+  }
+
+  /* --- ARROW CONNECTOR --- */
+  .arrow-down {
+    display: flex;
+    justify-content: center;
+    padding: 6px 0;
+    color: var(--gray-400);
+    font-size: 13px;
+  }
+
+  /* --- DIVIDER --- */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--gray-200);
+    margin: 40px 0;
+  }
+
+  /* --- PAGE BREAK --- */
+  @media print {
+    .page-break { page-break-before: always; }
+    .page { padding: 40px 36px; }
+  }
+
+  /* --- APPENDIX --- */
+  .appendix-table { font-size: 12px; }
+  .appendix-table th { font-size: 11px; padding: 8px 10px; }
+  .appendix-table td { padding: 8px 10px; font-size: 11.5px; }
+
+  /* --- LIST --- */
+  ul.clean { list-style: none; padding: 0; }
+  ul.clean li {
+    padding: 4px 0 4px 20px;
+    position: relative;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  ul.clean li::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    position: absolute;
+    left: 0;
+    top: 11px;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ==================== COVER ==================== -->
+  <div class="cover">
+    <div class="cover-eyebrow">AYANA Rewards</div>
+    <h1>Voucher Redemption &<br>Utilization Flow</h1>
+    <h2>Initial Design Review & Revised Recommendation</h2>
+    <div class="cover-meta">May 2026 &nbsp;|&nbsp; Draft for Review &nbsp;|&nbsp; Confidential</div>
+  </div>
+
+  <!-- ==================== PART 1: VOUCHER REDEMPTION ==================== -->
+  <div class="section">
+    <div class="section-num">Part 1</div>
+    <h2 class="section-title">Voucher Redemption</h2>
+
+    <p>Redemption is the process of exchanging points for a voucher. This section covers what information the member provides during redemption — specifically the "for me or others" choice and the additional info form per voucher category.</p>
+
+    <h3>1.1 For Me or For Others</h3>
+
+    <p>At redemption, the member selects whether the voucher is for themselves or for someone else. This choice is <strong>locked at redemption and cannot be changed after.</strong> Switching from "for others" back to self (or vice versa) after redemption would mean the redemption email already sent to the recipient becomes invalid — creating confusion for the recipient and requiring email revocation logic. Locking it avoids this complexity.</p>
+
+    <table>
+      <tr>
+        <th style="width: 160px;">Field</th>
+        <th>Rule</th>
+      </tr>
+      <tr>
+        <td><strong>Self / Others</strong></td>
+        <td>Mandatory. Locked once submitted — cannot be switched after redemption.</td>
+      </tr>
+      <tr>
+        <td><strong>Receiver name</strong></td>
+        <td>Mandatory if "for others." Locked once submitted.</td>
+      </tr>
+      <tr>
+        <td><strong>Receiver email</strong></td>
+        <td>Optional. Can only be filled at redemption — no fill-later. If provided, triggers a redemption email with the voucher to the recipient. Locked once submitted.</td>
+      </tr>
+    </table>
+
+    <div class="callout callout-blue">
+      <div class="callout-icon">i</div>
+      <div class="callout-body">
+        <strong>Business & Travel – Points Exchange:</strong> No separate self/others step. The member enters the external account ID to receive the points (e.g. Krisflyer member number). This could be their own account or someone else's — the flow is the same either way, since the member just inputs the target account ID in the form field.
+      </div>
+    </div>
+
+    <div class="callout callout-amber">
+      <div class="callout-icon">*</div>
+      <div class="callout-body">
+        <strong>Bulk gifting edge case:</strong> One or two high-volume members redeem many gift vouchers at once for different recipients (e.g. 10 restaurant gift vouchers for 10 different employees). The current flow requires "for others" to be selected per voucher at redemption, so a multi-quantity redemption assigns the same recipient to all vouchers. <strong>Current workaround:</strong> the member redeems separately with quantity 1 per recipient. <strong>Future consideration:</strong> if demand grows, an admin reassignment feature on the Ops Dashboard could allow the Rewards team to take a batch of vouchers redeemed by a single member and reassign them to different recipients on their behalf — essentially a concierge service where the member provides a list (e.g. via email or spreadsheet) and the admin team handles the individual assignments, generating the appropriate redemption emails for each recipient. This keeps the self-serve flow simple for all users while giving power users a supported path.
+      </div>
+    </div>
+
+    <h3>1.2 Additional Info</h3>
+
+    <p>Some voucher categories collect additional information at redemption. All categories have a Notes field with <strong>dynamic placeholder text</strong> tailored to the category — giving contextual hints about what's useful to include (e.g. preferred dates for hotel vouchers, dietary preferences for dining) without making any field mandatory. This is a frontend-only concern: the form structure and validation stay the same, only the placeholder string changes per category.</p>
+
+    <h4>On-site utilization vouchers (Dining, Wellness & Rec, Gift – restaurant, Retail collection, B&T – Others)</h4>
+
+    <p>These vouchers are used as payment method at the outlet. Additional info is optional and available at redemption only — no fill-later flow. If the member needs to communicate something after redemption, they can email support.</p>
+
+    <div class="card-grid">
+      <div class="card card-purple">
+        <div class="card-title">Initial design</div>
+        <div class="card-desc">
+          Optional Notes field. Could be filled at redemption or later from the redeemed voucher list.
+        </div>
+      </div>
+      <div class="card card-teal">
+        <div class="card-title">Decision</div>
+        <div class="card-desc">
+          <strong>Optional at redemption only. No fill-later flow.</strong> Notes field has dynamic placeholder text per category (e.g. Dining: <em>"e.g. Any dietary requirements or preferences"</em>; Retail: <em>"e.g. Preferred pickup date or location"</em>).
+        </div>
+      </div>
+    </div>
+
+    <table>
+      <tr>
+        <th>Category</th>
+        <th>Fields</th>
+        <th>When</th>
+      </tr>
+      <tr>
+        <td>Dining</td>
+        <td><span class="tag tag-gray">Notes (optional, dynamic placeholder)</span></td>
+        <td>At redemption only</td>
+      </tr>
+      <tr>
+        <td>Wellness & Recreation</td>
+        <td><span class="tag tag-gray">Notes (optional, dynamic placeholder)</span></td>
+        <td>At redemption only</td>
+      </tr>
+      <tr>
+        <td>Gift voucher – restaurant</td>
+        <td><span class="tag tag-gray">Notes (optional, dynamic placeholder)</span></td>
+        <td>At redemption only</td>
+      </tr>
+      <tr>
+        <td>Retail collection</td>
+        <td><span class="tag tag-gray">Notes (optional, dynamic placeholder)</span></td>
+        <td>At redemption only</td>
+      </tr>
+      <tr>
+        <td>Business & Travel – Others</td>
+        <td><span class="tag tag-gray">Notes (optional, dynamic placeholder)</span></td>
+        <td>At redemption only</td>
+      </tr>
+    </table>
+
+    <h4>Hotel vouchers (Hotel, Gift voucher – hotel)</h4>
+
+    <div class="card-grid">
+      <div class="card card-purple">
+        <div class="card-title">Initial design</div>
+        <div class="card-desc">
+          <strong>Hotel:</strong> Stay Date (mandatory), # Rooms (mandatory), Notes (optional).<br>
+          <strong>Gift – hotel:</strong> Date (mandatory), Confirm # (optional), Notes (optional).<br>
+          Form could be filled at redemption or later.
+        </div>
+      </div>
+      <div class="card card-teal">
+        <div class="card-title">Decision</div>
+        <div class="card-desc">
+          <strong>Structured fields removed.</strong> Both categories now have a single Notes field with a dynamic placeholder: <em>"e.g. Preferred stay date, number of rooms, or any special requests."</em> This captures useful info when the member already has plans, without forcing them to commit to specific dates or room counts at redemption time. Booking details are handled during the fulfillment/reservation process.
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout-amber">
+      <div class="callout-icon">*</div>
+      <div class="callout-body">
+        <strong>Why remove # Rooms?</strong> A member can redeem multiple quantity in one transaction (e.g. 5 × "One night stay at Resort View Room"). These 5 vouchers could be used as 5 nights in 1 room, 5 rooms for 1 night, or split across different stays. Capturing room count at redemption doesn't work because the allocation depends on how the member decides to use them later. This is better handled during the booking/fulfillment process where the reservations team is involved.
+      </div>
+    </div>
+
+    <table>
+      <tr>
+        <th>Category</th>
+        <th>Initial fields</th>
+        <th>Revised fields</th>
+        <th>When</th>
+      </tr>
+      <tr>
+        <td>Hotel</td>
+        <td><span class="tag tag-purple">Stay Date</span> <span class="tag tag-purple"># Rooms</span> <span class="tag tag-gray">Notes</span></td>
+        <td><span class="tag tag-teal">Notes with dynamic placeholder</span></td>
+        <td>At redemption only</td>
+      </tr>
+      <tr>
+        <td>Gift voucher – hotel</td>
+        <td><span class="tag tag-purple">Date</span> <span class="tag tag-gray">Confirm #</span> <span class="tag tag-gray">Notes</span></td>
+        <td><span class="tag tag-teal">Notes with dynamic placeholder</span></td>
+        <td>At redemption only</td>
+      </tr>
+    </table>
+
+    <h4>Business & Travel – Points Exchange</h4>
+
+    <p>Points Exchange vouchers require account details to process the transfer. The form must be filled at redemption — there is no fill-later option, since fulfillment depends on the external account information. No self/others choice for this category.</p>
+
+    <div class="card-grid">
+      <div class="card card-purple">
+        <div class="card-title">Initial design</div>
+        <div class="card-desc">
+          Account ID (mandatory), Name (mandatory), Notes (optional). Form must be filled at redemption.
+        </div>
+      </div>
+      <div class="card card-teal">
+        <div class="card-title">Decision</div>
+        <div class="card-desc">
+          <strong>Same fields and rules.</strong> The addition is <strong>dynamic helper text per product.</strong> For example, Flow Coins Redemption shows: <em>"Don't have a Flow account? No worries — enter your email and we'll set it up for you."</em> Krisflyer shows standard field labels with no extra text. This handles the case where a member doesn't yet have an account on the partner program (Flow is a sister company and will register the user).
+        </div>
+      </div>
+    </div>
+
+    <table>
+      <tr>
+        <th>Category</th>
+        <th>Fields</th>
+        <th>When</th>
+        <th>Note</th>
+      </tr>
+      <tr>
+        <td>B&T – Points Exchange</td>
+        <td><span class="tag tag-purple">Account ID</span> <span class="tag tag-purple">Name</span> <span class="tag tag-gray">Notes (optional)</span></td>
+        <td>Required at redemption</td>
+        <td>Dynamic helper text per product</td>
+      </tr>
+    </table>
+
+    <h3>1.3 Post-Redemption CTA</h3>
+
+    <p>After redemption, the voucher detail page shows a call-to-action that opens a prefilled email to the Rewards team. This appears for both the member (in their redeemed voucher list) and the recipient (on the voucher page accessed via the redemption email link). The CTA gives users a direct path to coordinate with the team without building a fill-later form.</p>
+
+    <div class="card-grid">
+      <div class="card card-teal">
+        <div class="card-title">Hotel / Gift voucher – hotel</div>
+        <div class="card-desc">
+          CTA label: <strong>"Ready to book? Contact us"</strong><br>
+          These categories need reservation coordination (dates, rooms, special requests). The CTA opens a prefilled email to the reservations/Rewards inbox.
+        </div>
+      </div>
+      <div class="card card-blue">
+        <div class="card-title">Dining / Wellness / Gift – restaurant / Retail / B&T – Others</div>
+        <div class="card-desc">
+          CTA label: <strong>"Questions about this voucher? Contact us"</strong><br>
+          Lighter wording — these are typically walk-in/on-site vouchers. The CTA serves as a general support channel.
+        </div>
+      </div>
+    </div>
+
+    <table>
+      <tr>
+        <th style="width: 140px;">Email field</th>
+        <th>Content</th>
+      </tr>
+      <tr>
+        <td><strong>To</strong></td>
+        <td>Dedicated Rewards inbox (e.g. rewards@ayana.com)</td>
+      </tr>
+      <tr>
+        <td><strong>Subject</strong></td>
+        <td>Voucher Inquiry — [Voucher Code] [Voucher Name]</td>
+      </tr>
+      <tr>
+        <td><strong>Body</strong></td>
+        <td>Prefilled with: member name, membership tier, voucher type, quantity, voucher code. For "for others" recipients, the body identifies them as the recipient and includes the gifter's name.</td>
+      </tr>
+    </table>
+
+    <div class="callout callout-blue">
+      <div class="callout-icon">i</div>
+      <div class="callout-body">
+        <strong>Who sees it:</strong> For "for me" vouchers, the member sees the CTA on their voucher detail page. For "for others" vouchers, both the member (in their redeemed voucher list) and the recipient (on the voucher page from the redemption email) see the CTA — with slightly different prefilled email body text so the Rewards team knows who they're speaking with.
+      </div>
+    </div>
+
+    <div class="callout callout-amber">
+      <div class="callout-icon">*</div>
+      <div class="callout-body">
+        <strong>Exception — B&T – Points Exchange:</strong> No CTA. Points Exchange vouchers are processed automatically once the account details are submitted at redemption. There is nothing to coordinate after.
+      </div>
+    </div>
+
+    <h3>1.4 Redemption Form Mockups</h3>
+
+    <p>The following mockups show the revised redemption form for four key variations. Based on the existing Figma design, with per-voucher structured fields (Date, Time) replaced by a single Notes field with dynamic placeholder text per category.</p>
+
+    <!-- MOCKUP ROW 1: For Me + For Others -->
+    <div style="display: flex; gap: 24px; flex-wrap: wrap; margin: 20px 0;">
+
+      <!-- MOCKUP 1: For Me (Dining) -->
+      <div style="width: 300px; border: 1px solid var(--gray-200); border-radius: 16px; overflow: hidden; background: #fff; font-family: var(--font); font-size: 13px; box-shadow: 0 1px 4px rgba(0,0,0,0.06);">
+        <div style="padding: 14px 20px; border-bottom: 1px solid var(--gray-200); text-align: center; font-size: 11px; letter-spacing: 0.18em; font-weight: 600; color: var(--gray-800);">A Y A N A<br><span style="font-size: 8px; letter-spacing: 0.22em; font-weight: 400; color: var(--gray-400);">REWARDS</span></div>
+        <div style="padding: 16px 20px;">
+          <div style="background: var(--gray-50); border-radius: 10px; padding: 14px 16px; margin-bottom: 16px;">
+            <div style="font-weight: 600; font-size: 14px; color: var(--dark); margin-bottom: 4px;">Breakfast at Terrace Restaurant for 1 Pax</div>
+            <div style="font-size: 11px; color: var(--gray-600);">2,000 points · 3 vouchers</div>
+          </div>
+          <div style="background: var(--gray-50); border-radius: 10px; padding: 14px 16px; margin-bottom: 16px;">
+            <div style="font-weight: 600; font-size: 12px; color: var(--dark); margin-bottom: 8px;">Redeem for whom?</div>
+            <div style="display: flex; gap: 24px;">
+              <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--dark);"><span style="width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--accent); display: flex; align-items: center; justify-content: center;"><span style="width: 8px; height: 8px; border-radius: 50%; background: var(--accent);"></span></span>For me</label>
+              <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--gray-600);"><span style="width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--gray-300);"></span>For other</label>
+            </div>
+          </div>
+          <div style="font-size: 11px; font-weight: 600; color: var(--dark); margin-bottom: 4px;">Additional Notes</div>
+          <div style="border: 1px solid var(--gray-200); border-radius: 6px; padding: 8px 10px; font-size: 11px; color: var(--gray-400); min-height: 48px; margin-bottom: 20px;">e.g. Tell us your preferred dates if any, or any other preferences (dietary etc)</div>
+        </div>
+        <div style="padding: 14px 20px; border-top: 1px solid var(--gray-200); display: flex; align-items: center; justify-content: space-between;">
+          <div><span style="font-size: 11px; color: var(--gray-600);">Total Points</span><br><span style="font-weight: 600; font-size: 15px; color: var(--dark);">6,000</span></div>
+          <div style="background: var(--accent); color: #fff; padding: 10px 32px; border-radius: 8px; font-weight: 600; font-size: 13px; letter-spacing: 0.04em;">REDEEM</div>
+        </div>
+      </div>
+
+      <!-- MOCKUP 2: For Others (Dining) -->
+      <div style="width: 300px; border: 1px solid var(--gray-200); border-radius: 16px; overflow: hidden; background: #fff; font-family: var(--font); font-size: 13px; box-shadow: 0 1px 4px rgba(0,0,0,0.06);">
+        <div style="padding: 14px 20px; border-bottom: 1px solid var(--gray-200); text-align: center; font-size: 11px; letter-spacing: 0.18em; font-weight: 600; color: var(--gray-800);">A Y A N A<br><span style="font-size: 8px; letter-spacing: 0.22em; font-weight: 400; color: var(--gray-400);">REWARDS</span></div>
+        <div style="padding: 16px 20px;">
+          <div style="background: var(--gray-50); border-radius: 10px; padding: 14px 16px; margin-bottom: 16px;">
+            <div style="font-weight: 600; font-size: 14px; color: var(--dark); margin-bottom: 4px;">Breakfast at Terrace Restaurant for 1 Pax</div>
+            <div style="font-size: 11px; color: var(--gray-600);">2,000 points · 1 voucher</div>
+          </div>
+          <div style="font-weight: 600; font-size: 12px; color: var(--dark); margin-bottom: 10px;">Redemption Info</div>
+          <div style="background: var(--gray-50); border-radius: 10px; padding: 14px 16px; margin-bottom: 16px;">
+            <div style="font-weight: 600; font-size: 12px; color: var(--dark); margin-bottom: 8px;">Redeem for whom?</div>
+            <div style="display: flex; gap: 24px; margin-bottom: 14px;">
+              <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--gray-600);"><span style="width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--gray-300);"></span>For me</label>
+              <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--dark);"><span style="width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--accent); display: flex; align-items: center; justify-content: center;"><span style="width: 8px; height: 8px; border-radius: 50%; background: var(--accent);"></span></span>For other</label>
+            </div>
+            <div style="font-size: 11px; font-weight: 600; color: var(--dark); margin-bottom: 4px;">Receiver Name</div>
+            <div style="border: 1px solid var(--gray-200); border-radius: 6px; padding: 8px 10px; font-size: 12px; color: var(--dark); margin-bottom: 12px; background: #fff;">Sarah Johnson</div>
+            <div style="font-size: 11px; font-weight: 600; color: var(--dark); margin-bottom: 4px;">Receiver Email (Optional)</div>
+            <div style="border: 1px solid var(--gray-200); border-radius: 6px; padding: 8px 10px; font-size: 12px; color: var(--dark); margin-bottom: 4px; background: #fff;">sarah.j@email.com</div>
+            <div style="font-size: 10px; color: var(--gray-400);">We'll send the Redemption Voucher to this email.</div>
+          </div>
+          <div style="font-size: 11px; font-weight: 600; color: var(--dark); margin-bottom: 4px;">Additional Notes</div>
+          <div style="border: 1px solid var(--gray-200); border-radius: 6px; padding: 8px 10px; font-size: 11px; color: var(--gray-400); min-height: 48px; margin-bottom: 20px;">e.g. Tell us your preferred dates if any, or any other preferences (dietary etc)</div>
+        </div>
+        <div style="padding: 14px 20px; border-top: 1px solid var(--gray-200); display: flex; align-items: center; justify-content: space-between;">
+          <div><span style="font-size: 11px; color: var(--gray-600);">Total Points</span><br><span style="font-weight: 600; font-size: 15px; color: var(--dark);">2,000</span></div>
+          <div style="background: var(--accent); color: #fff; padding: 10px 32px; border-radius: 8px; font-weight: 600; font-size: 13px; letter-spacing: 0.04em;">REDEEM</div>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="small muted" style="margin-top: 0;">Left: Dining redemption (for me) — single Notes field with dynamic placeholder. Right: Dining redemption (for others) — receiver fields + Notes with same placeholder.</p>
+
+    <!-- MOCKUP ROW 2: Points Exchange (Flow with helper) + Points Exchange (Krisflyer without helper) -->
+    <div style="display: flex; gap: 24px; flex-wrap: wrap; margin: 20px 0;">
+
+      <!-- MOCKUP 3: Points Exchange — Flow Coins (with helper text) -->
+      <div style="width: 300px; border: 1px solid var(--gray-200); border-radius: 16px; overflow: hidden; background: #fff; font-family: var(--font); font-size: 13px; box-shadow: 0 1px 4px rgba(0,0,0,0.06);">
+        <div style="padding: 14px 20px; border-bottom: 1px solid var(--gray-200); text-align: center; font-size: 11px; letter-spacing: 0.18em; font-weight: 600; color: var(--gray-800);">A Y A N A<br><span style="font-size: 8px; letter-spacing: 0.22em; font-weight: 400; color: var(--gray-400);">REWARDS</span></div>
+        <div style="padding: 16px 20px;">
+          <div style="background: var(--gray-50); border-radius: 10px; padding: 14px 16px; margin-bottom: 16px;">
+            <div style="font-weight: 600; font-size: 14px; color: var(--dark); margin-bottom: 4px;">Convert to Flow Coins</div>
+            <div style="font-size: 11px; color: var(--gray-600);">5,000 points · 1 voucher</div>
+          </div>
+          <div style="font-weight: 600; font-size: 12px; color: var(--dark); margin-bottom: 10px;">Account Details <span style="font-weight: 400; color: var(--coral); font-size: 10px;">(Required)</span></div>
+          <div style="font-size: 11px; font-weight: 600; color: var(--dark); margin-bottom: 4px;">Account ID*</div>
+          <div style="border: 1px solid var(--gray-200); border-radius: 6px; padding: 8px 10px; font-size: 12px; color: var(--dark); margin-bottom: 4px;">user@email.com</div>
+          <div style="font-size: 10px; color: var(--accent); margin-bottom: 12px;">Don't have a Flow account? No worries — enter your email and we'll set it up for you.</div>
+          <div style="font-size: 11px; font-weight: 600; color: var(--dark); margin-bottom: 4px;">Name*</div>
+          <div style="border: 1px solid var(--gray-200); border-radius: 6px; padding: 8px 10px; font-size: 12px; color: var(--dark); margin-bottom: 14px;">John Doe</div>
+          <div style="font-size: 11px; font-weight: 600; color: var(--dark); margin-bottom: 4px;">Notes</div>
+          <div style="border: 1px solid var(--gray-200); border-radius: 6px; padding: 8px 10px; font-size: 11px; color: var(--gray-400); min-height: 36px;">e.g. Any additional information</div>
+        </div>
+        <div style="padding: 14px 20px; border-top: 1px solid var(--gray-200); display: flex; align-items: center; justify-content: space-between;">
+          <div><span style="font-size: 11px; color: var(--gray-600);">Total Points</span><br><span style="font-weight: 600; font-size: 15px; color: var(--dark);">5,000</span></div>
+          <div style="background: var(--accent); color: #fff; padding: 10px 32px; border-radius: 8px; font-weight: 600; font-size: 13px; letter-spacing: 0.04em;">REDEEM</div>
+        </div>
+      </div>
+
+      <!-- MOCKUP 4: Points Exchange — Krisflyer (no helper text) -->
+      <div style="width: 300px; border: 1px solid var(--gray-200); border-radius: 16px; overflow: hidden; background: #fff; font-family: var(--font); font-size: 13px; box-shadow: 0 1px 4px rgba(0,0,0,0.06);">
+        <div style="padding: 14px 20px; border-bottom: 1px solid var(--gray-200); text-align: center; font-size: 11px; letter-spacing: 0.18em; font-weight: 600; color: var(--gray-800);">A Y A N A<br><span style="font-size: 8px; letter-spacing: 0.22em; font-weight: 400; color: var(--gray-400);">REWARDS</span></div>
+        <div style="padding: 16px 20px;">
+          <div style="background: var(--gray-50); border-radius: 10px; padding: 14px 16px; margin-bottom: 16px;">
+            <div style="font-weight: 600; font-size: 14px; color: var(--dark); margin-bottom: 4px;">Convert to Krisflyer Miles</div>
+            <div style="font-size: 11px; color: var(--gray-600);">8,000 points · 1 voucher</div>
+          </div>
+          <div style="font-weight: 600; font-size: 12px; color: var(--dark); margin-bottom: 10px;">Account Details <span style="font-weight: 400; color: var(--coral); font-size: 10px;">(Required)</span></div>
+          <div style="font-size: 11px; font-weight: 600; color: var(--dark); margin-bottom: 4px;">Account ID*</div>
+          <div style="border: 1px solid var(--gray-200); border-radius: 6px; padding: 8px 10px; font-size: 12px; color: var(--dark); margin-bottom: 14px;">1234567890</div>
+          <div style="font-size: 11px; font-weight: 600; color: var(--dark); margin-bottom: 4px;">Name*</div>
+          <div style="border: 1px solid var(--gray-200); border-radius: 6px; padding: 8px 10px; font-size: 12px; color: var(--dark); margin-bottom: 14px;">John Doe</div>
+          <div style="font-size: 11px; font-weight: 600; color: var(--dark); margin-bottom: 4px;">Notes</div>
+          <div style="border: 1px solid var(--gray-200); border-radius: 6px; padding: 8px 10px; font-size: 11px; color: var(--gray-400); min-height: 36px;">e.g. Any additional information</div>
+        </div>
+        <div style="padding: 14px 20px; border-top: 1px solid var(--gray-200); display: flex; align-items: center; justify-content: space-between;">
+          <div><span style="font-size: 11px; color: var(--gray-600);">Total Points</span><br><span style="font-weight: 600; font-size: 15px; color: var(--dark);">8,000</span></div>
+          <div style="background: var(--accent); color: #fff; padding: 10px 32px; border-radius: 8px; font-weight: 600; font-size: 13px; letter-spacing: 0.04em;">REDEEM</div>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="small muted" style="margin-top: 0;">Left: Flow Coins — dynamic helper text under Account ID for users who may not have a Flow account. Right: Krisflyer Miles — same form structure, no helper text (user is expected to have an account). No self/others choice for either.</p>
+
+  </div>
+
+  <hr class="divider">
+
+  <!-- ==================== PART 2: VOUCHER UTILIZATION ==================== -->
+  <div class="section" style="margin-bottom: 24px;">
+    <div class="section-num">Part 2</div>
+    <h2 class="section-title">Voucher Utilization</h2>
+    <p>Utilization is the process of using a redeemed voucher at an outlet or having it fulfilled by the Rewards admin. This part covers the current state, the initial proposed flow, the revised proposal, fraud prevention, and open items.</p>
+  </div>
+
+  <!-- ==================== SECTION 2.1: HOW UTILIZATION WORKS TODAY ==================== -->
+  <div class="section">
+    <div class="section-num">Section 2.1</div>
+    <h2 class="section-title">How Voucher Utilization Works Today</h2>
+
+    <p>Today, voucher utilization runs on a simple manual process: the member shows their voucher code (on their phone or screen), and staff searches for it in the Rewards system to mark it as used. There is no QR scanning, no Field App integration, and no guest app involved in the utilization flow.</p>
+
+    <p>This works, but it has known limitations: the voucher code is exposed in plain text (fraud risk), there's no built-in identity verification (anyone who knows the code could use it), and it relies on staff manually looking up codes in a web dashboard.</p>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ==================== SECTION 3: INITIAL PROPOSED UTILIZATION FLOW ==================== -->
+  <div class="section">
+    <div class="section-num">Section 2.2</div>
+    <h2 class="section-title">Initial Proposed Utilization Flow (Not Yet Implemented)</h2>
+
+    <p>Before implementation, a detailed utilization flow was designed to accommodate different voucher categories, outlet capabilities, and user types. The full matrix is in the <a href="#appendix">Appendix</a>. This section summarizes the key design decisions.</p>
+
+    <h3>Voucher Categories</h3>
+
+    <div class="card-grid">
+      <div class="card card-purple">
+        <div class="card-title">Admin-fulfilled vouchers</div>
+        <div class="card-desc">
+          Processed entirely by Rewards admin via Ops Dashboard after service delivery. No on-site utilization flow needed.
+        </div>
+        <div style="margin-top: 10px;">
+          <span class="tag tag-purple">Hotel</span>
+          <span class="tag tag-purple">Business & Travel – Points Exchange</span>
+        </div>
+      </div>
+      <div class="card card-teal">
+        <div class="card-title">On-site utilization vouchers</div>
+        <div class="card-desc">
+          Require on-site verification and utilization at the outlet. Used as payment method or entitlement at point of consumption.
+        </div>
+        <div style="margin-top: 10px;">
+          <span class="tag tag-teal">Dining</span>
+          <span class="tag tag-teal">Wellness & Recreation</span>
+          <span class="tag tag-teal">Gift voucher – restaurant</span>
+          <span class="tag tag-teal">Retail collection</span>
+          <span class="tag tag-teal">Business & Travel – Others</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-amber" style="margin-top: 0;">
+      <div class="card-title">Hybrid</div>
+      <div class="card-desc">
+        <span class="tag tag-amber" style="margin-bottom: 6px;">Gift voucher – hotel</span><br>
+        For self-use: on-site utilization as payment method (same as other on-site vouchers).<br>
+        For others: converts to a gift certificate, becoming admin-fulfilled.
+      </div>
+    </div>
+
+    <h3>Initial Utilization Methods</h3>
+    <p>For on-site vouchers, the initial design defined <strong>5 different utilization methods</strong> based on three branching factors:</p>
+
+    <div class="card-grid" style="grid-template-columns: 1fr 1fr 1fr;">
+      <div class="card card-gray" style="text-align: center;">
+        <div class="card-title">Outlet capability</div>
+        <div class="card-desc">Does the property have a Field App (and guest app)?</div>
+      </div>
+      <div class="card card-gray" style="text-align: center;">
+        <div class="card-title">User type</div>
+        <div class="card-desc">Is the voucher being used by the member (self) or someone else (others)?</div>
+      </div>
+      <div class="card card-gray" style="text-align: center;">
+        <div class="card-title">Guest status</div>
+        <div class="card-desc">Is the user a staying guest or a non-staying guest / external visitor?</div>
+      </div>
+    </div>
+
+    <p>These three factors produce the following methods:</p>
+
+    <table>
+      <tr>
+        <th style="width: 30px;">#</th>
+        <th>Method</th>
+        <th>When used</th>
+        <th>Initiated by</th>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td><strong>Staff via Field App</strong> (no QR scan)</td>
+        <td>Property has Field App, voucher for self</td>
+        <td>Staff</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td><strong>Member & staff scan QR</strong> on Rewards website</td>
+        <td>Property has Field App, voucher for self</td>
+        <td>Guest + Staff</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td><strong>Member & staff scan QR</strong> on redemption email</td>
+        <td>Property has Field App, voucher for others</td>
+        <td>Guest + Staff</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td><strong>Member scans outlet QR</strong> via Rewards website</td>
+        <td>No Field App, voucher for self</td>
+        <td>Guest</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td><strong>Guest scans outlet QR</strong> via Utilization Landing Page</td>
+        <td>No Field App, voucher for others</td>
+        <td>Guest</td>
+      </tr>
+    </table>
+
+    <h3>Assessment</h3>
+    <p>Before building this, we revisited the design to see if it could be improved. The assessment focuses on two specific areas where the initial flow could be better:</p>
+
+    <div class="card card-coral" style="margin: 16px 0;">
+      <div class="card-title">Guest-initiated multi-step flows (methods 4–5)</div>
+      <div class="card-desc">
+        In methods 4 and 5, the guest must drive the entire process: scan an outlet QR code, navigate to a website or landing page, find and select the correct voucher, and show confirmation to staff. This is a multi-step guest-initiated flow that could be replaced with a simpler staff-initiated approach. (Note: methods 2–3, where the guest shows a QR and staff scans it, are lighter and remain in the revised proposal.)
+      </div>
+    </div>
+
+    <div class="card card-coral" style="margin: 16px 0;">
+      <div class="card-title">Staying guest experience (method 1) — needs clarification</div>
+      <div class="card-desc">
+        Method 1 ("staff via Field App, no QR") is underspecified — it doesn't define how staff identifies which guest's voucher to use. The revised proposal makes this clearer by specifying a room number or guest name lookup via PMS integration in the Field App. The method itself is the same; we're just documenting the steps explicitly.
+      </div>
+    </div>
+
+    <div class="callout callout-amber">
+      <div class="callout-icon">*</div>
+      <div class="callout-body">
+        <strong>What stays the same:</strong> The branching factors (outlet capability, user type, guest status) still apply. Guests still need to show a QR on their phone for method 2. Self vs others still determines where the QR comes from (account vs email). Staff still needs to know the situation. The category-to-nature mapping and admin-fulfilled flow are unchanged.
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ==================== SECTION 4: REVISED UTILIZATION FLOW ==================== -->
+  <div class="section">
+    <div class="section-num">Section 2.3</div>
+    <h2 class="section-title">Revised Proposed Utilization Flow</h2>
+
+    <p>The revised proposal makes <strong>one targeted change</strong> to the initial design (replacing guest-initiated outlet QR flows with a staff web tool), <strong>clarifies one underspecified method</strong> (room lookup for staying guests), and keeps the rest intact.</p>
+
+    <h3>Voucher Nature Classification (Unchanged)</h3>
+    <p>The two-nature classification from the initial design remains the same. Admin-fulfilled vouchers are handled via Ops Dashboard; on-site vouchers require staff action at the outlet. The voucher category determines <em>when</em> utilization happens, not <em>how</em>.</p>
+
+    <table>
+      <tr>
+        <th style="width: 160px;">Nature</th>
+        <th>Description</th>
+        <th style="width: 260px;">Categories</th>
+      </tr>
+      <tr>
+        <td><span class="tag tag-purple">Admin-fulfilled</span></td>
+        <td>No on-site utilization needed. Rewards admin processes via Ops Dashboard after service is delivered.</td>
+        <td>
+          <span class="tag tag-purple">Hotel</span>
+          <span class="tag tag-purple">Business & Travel – Points Exchange</span>
+          <span class="tag tag-purple">Gift voucher – hotel</span> <span class="small muted">(for others &rarr; gift certificate)</span>
+        </td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-teal">On-site utilization</span></td>
+        <td>Guest presents or staff identifies the voucher at the outlet. Used as payment method or entitlement at point of consumption.</td>
+        <td>
+          <span class="tag tag-teal">Dining</span>
+          <span class="tag tag-teal">Wellness & Recreation</span>
+          <span class="tag tag-teal">Gift voucher – restaurant</span>
+          <span class="tag tag-teal">Retail collection</span>
+          <span class="tag tag-teal">Gift voucher – hotel</span> <span class="small muted">(self, as payment)</span>
+          <span class="tag tag-teal">Business & Travel – Others</span>
+        </td>
+      </tr>
+    </table>
+
+    <h3>Utilization Methods (Revised)</h3>
+    <p>The revised proposal consolidates the initial 5 methods into <strong>2 primary methods + 1 monitored fallback</strong>. The change is specific: we eliminate the 2 guest-initiated outlet QR scanning flows (initial methods 4–5) and replace them with a staff web tool. We also formalize the room lookup flow for staying guests (initially underspecified as method 1). Methods 2–3 from the initial design (guest shows QR, staff scans it) carry forward largely unchanged.</p>
+
+    <!-- METHOD 1 -->
+    <div class="method-card method-1">
+      <div class="method-badge">Method 1 &nbsp;·&nbsp; In-house Guest Flow</div>
+      <div class="method-name">Room / Name Lookup</div>
+      <div class="method-sub">For staying guests at properties with Field App. Guest does not need their phone.</div>
+
+      <div class="flow-container">
+        <div class="flow-step">
+          <div class="flow-num" style="background: var(--teal);">1</div>
+          <div class="flow-body">
+            <div class="flow-title">Guest arrives at outlet</div>
+            <div class="flow-desc">Identifies themselves verbally or staff recognizes them.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num" style="background: var(--teal);">2</div>
+          <div class="flow-body">
+            <div class="flow-title">Staff searches by room number or name</div>
+            <div class="flow-desc">Using the Field App. System cross-checks with PMS to verify the guest is currently checked in.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num" style="background: var(--teal);">3</div>
+          <div class="flow-body">
+            <div class="flow-title">Field App shows guest's available vouchers</div>
+            <div class="flow-desc">Only vouchers valid for that outlet are displayed.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num" style="background: var(--teal);">4</div>
+          <div class="flow-body">
+            <div class="flow-title">Staff selects voucher, guest confirms, done</div>
+            <div class="flow-desc">One tap to mark as utilized. System records the transaction.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="method-detail-grid">
+        <div class="method-detail">
+          <div class="method-detail-label">Requirements</div>
+          <div class="method-detail-content">
+            Field App with AYANA Rewards voucher integration + guest data from PMS
+          </div>
+        </div>
+        <div class="method-detail">
+          <div class="method-detail-label">Applicable to</div>
+          <div class="method-detail-content">
+            Staying guests (self-use) at properties with Field App
+          </div>
+        </div>
+        <div class="method-detail">
+          <div class="method-detail-label">Identity verification</div>
+          <div class="method-detail-content">
+            PMS confirms room occupant. Hotel check-in already verified guest ID.
+          </div>
+        </div>
+        <div class="method-detail">
+          <div class="method-detail-label">Anti-fraud</div>
+          <div class="method-detail-content">
+            Staff can see voucher details after lookup, but access is scoped to verified in-house guests only — staff cannot browse arbitrary member vouchers. The primary control is PMS verification, not code secrecy.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="or-divider">fallback when method 1 is not available</div>
+
+    <!-- METHOD 2 -->
+    <div class="method-card method-2">
+      <div class="method-badge">Method 2 &nbsp;·&nbsp; Standard Flow</div>
+      <div class="method-name">QR Scan</div>
+      <div class="method-sub">Universal method for all other scenarios. Covers non-staying guests, recipients (for others), and properties without PMS integration.</div>
+
+      <div class="flow-container">
+        <div class="flow-step">
+          <div class="flow-num" style="background: var(--accent);">1</div>
+          <div class="flow-body">
+            <div class="flow-title">Guest opens their voucher QR</div>
+            <div class="flow-desc">
+              <strong>Members:</strong> from their Rewards account (requires login).<br>
+              <strong>Recipients (for others):</strong> from the redemption email link (unique per recipient, dynamically generated).
+            </div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num" style="background: var(--accent);">2</div>
+          <div class="flow-body">
+            <div class="flow-title">Staff scans the QR</div>
+            <div class="flow-desc">Using the Field App or the staff web tool (for non-Field-App outlets). The QR contains a secure token — not the plain voucher code (see Section 2.5 — QR Token Approach for token options).</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num" style="background: var(--accent);">3</div>
+          <div class="flow-body">
+            <div class="flow-title">System validates and shows voucher details</div>
+            <div class="flow-desc">Decrypts/verifies the token, checks voucher is valid and not yet used, displays details to staff.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num" style="background: var(--accent);">4</div>
+          <div class="flow-body">
+            <div class="flow-title">Staff confirms utilization</div>
+            <div class="flow-desc">One tap. System marks voucher as used. Done.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="method-detail-grid">
+        <div class="method-detail">
+          <div class="method-detail-label">Requirements</div>
+          <div class="method-detail-content">
+            Field App or staff web tool with camera access. HTTPS required.
+          </div>
+        </div>
+        <div class="method-detail">
+          <div class="method-detail-label">Applicable to</div>
+          <div class="method-detail-content">
+            All guests at all properties — non-staying guests, recipients, and staying guests where Rewards voucher integration is not yet live.
+          </div>
+        </div>
+        <div class="method-detail">
+          <div class="method-detail-label">Identity verification</div>
+          <div class="method-detail-content">
+            Secure token in QR proves access to member account or recipient email. Cannot be generated without login/email access.
+          </div>
+        </div>
+        <div class="method-detail">
+          <div class="method-detail-label">Anti-fraud</div>
+          <div class="method-detail-content">
+            The QR contains a secure token that cannot be generated from the voucher code alone — knowing or sharing the code is not enough to utilize the voucher. Staff may see the voucher code on the details screen, but it is not useful without the token.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="or-divider">fallback when method 2 is not possible</div>
+
+    <!-- METHOD 3 -->
+    <div class="method-card method-3">
+      <div class="method-badge" style="background: var(--gray-200); color: var(--gray-600);">Method 3 &nbsp;·&nbsp; Fallback</div>
+      <div class="method-name">Manual Code Entry</div>
+      <div class="method-sub">For edge cases where QR scanning is not possible (camera not working, guest unable to show voucher on phone). Staff enters the voucher code manually.</div>
+
+      <div class="flow-container">
+        <div class="flow-step">
+          <div class="flow-num" style="background: var(--gray-600);">1</div>
+          <div class="flow-body">
+            <div class="flow-title">Guest provides voucher code</div>
+            <div class="flow-desc">Guest reads the code aloud from their phone/email, or shows the code on screen without QR.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num" style="background: var(--gray-600);">2</div>
+          <div class="flow-body">
+            <div class="flow-title">Staff enters code into Field App or staff web tool</div>
+            <div class="flow-desc">System looks up the voucher, displays details to staff.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num" style="background: var(--gray-600);">3</div>
+          <div class="flow-body">
+            <div class="flow-title">Staff confirms utilization</div>
+            <div class="flow-desc">System marks voucher as used.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout callout-amber" style="margin-top: 12px; margin-bottom: 0;">
+        <div class="callout-icon">*</div>
+        <div class="callout-body">
+          <strong>Fraud note:</strong> This method is the weakest from a security standpoint since the plain voucher code is exposed. For the first phase, rather than adding a second-factor verification (which adds complexity), we recommend: <strong>(1)</strong> closely monitoring all utilizations made via this method, and <strong>(2)</strong> restricting access to this fallback to limited/senior staff roles. If fraud patterns emerge, second-factor verification (e.g. member name, OTP) can be added later.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ==================== SECTION 3.3: WHAT CHANGES VS WHAT STAYS ==================== -->
+  <div class="section">
+    <div class="section-num">Section 2.4</div>
+    <h2 class="section-title">What Actually Changes vs What Stays the Same</h2>
+
+    <p>The revision is targeted, not a wholesale redesign. This section is deliberately explicit about the scope of changes to avoid overselling the simplification.</p>
+
+    <h3>What changes (3 things)</h3>
+
+    <div class="card card-teal" style="margin: 16px 0;">
+      <div class="card-title">1. Guest-initiated outlet QR flows are eliminated</div>
+      <div class="card-desc">
+        Initial methods 4 and 5 — where the guest scans an outlet QR code, navigates to a website/landing page, selects their voucher, and shows confirmation to staff — are removed. Instead, staff at non-Field-App outlets use a new staff web tool to scan the guest's QR or enter a code. This means <strong>physical outlet QR codes</strong> and the <strong>Utilization Landing Page</strong> are no longer needed.
+      </div>
+    </div>
+
+    <div class="card card-teal" style="margin: 16px 0;">
+      <div class="card-title">2. Room/name lookup is clarified for staying guests</div>
+      <div class="card-desc">
+        Initial method 1 ("staff via Field App, no QR") was underspecified — it didn't define how staff identifies the guest. The revised documentation makes this explicit: staff looks up the guest by room number or name via PMS integration in the Field App. The method itself is the same; we're just documenting the steps. This still requires Rewards voucher data to be integrated into the Field App (currently not available).
+      </div>
+    </div>
+
+    <div class="card card-teal" style="margin: 16px 0;">
+      <div class="card-title">3. A staff web tool is introduced</div>
+      <div class="card-desc">
+        A new lightweight browser-based tool for outlets without Field App. This is what replaces the guest-initiated outlet QR flows — staff scans the guest's QR or enters a code, instead of the guest driving the process. This is a net-new build.
+      </div>
+    </div>
+
+    <h3>What stays the same</h3>
+
+    <div class="card card-gray" style="margin: 16px 0;">
+      <div class="card-desc">
+        <ul class="clean">
+          <li><strong>Guests still show a QR on their phone</strong> — for non-staying guests (Method 2), this is unchanged from initial methods 2–3. The guest opens their voucher QR from their Rewards account or redemption email, and staff scans it.</li>
+          <li><strong>Self vs others distinction still exists.</strong> Members show QR from their account; recipients show QR from their email. The source of the QR differs. The staff process happens to be the same for both, but the system still distinguishes them.</li>
+          <li><strong>Staying vs non-staying decision still exists.</strong> Staff still needs to determine whether the guest is a staying guest (eligible for room lookup) or not. This branching factor is unchanged.</li>
+          <li><strong>Staff still needs training on which method applies.</strong> The decision tree is simpler (staying → room lookup, otherwise → QR scan, fallback → code entry) but staff still must assess the situation and choose the right path.</li>
+          <li><strong>The voucher category classification is unchanged.</strong> The same 8 categories map to the same 2 natures (admin-fulfilled vs on-site).</li>
+          <li><strong>Admin-fulfilled vouchers are unchanged.</strong> Hotel and Business & Travel – Points Exchange vouchers are still processed via Ops Dashboard.</li>
+          <li><strong>Anti-double-utilization is unchanged.</strong> Still fully system-managed at the backend level.</li>
+          <li><strong>Most infrastructure remains.</strong> Field App, Rewards website QR display, redemption email QR — all still needed. We add a staff web tool and remove outlet QR codes + Utilization Landing Page.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout callout-amber">
+      <div class="callout-icon">*</div>
+      <div class="callout-body">
+        <strong>Net assessment:</strong> The revision eliminates 2 guest-initiated multi-step flows and replaces them with staff-initiated equivalents. It formalizes one underspecified method. Everything else — the branching logic, the guest actions for QR-based flows, the category system, the fraud model — carries forward from the initial design.
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ==================== SECTION 4: FRAUD & COMPLIANCE ==================== -->
+  <div class="section">
+    <div class="section-num">Section 2.5</div>
+    <h2 class="section-title">Fraud Prevention & Compliance</h2>
+
+    <p>The revised flow maintains compliance by assigning each primary utilization method its own proof of entitlement. For the two primary methods, <strong>knowing the voucher code alone is not sufficient to utilize a voucher.</strong> The fallback method (code entry) is an exception — it relies on operational controls (monitoring, restricted access) rather than technical prevention. This fraud model is essentially unchanged from the initial design — the same threats apply, and the same mitigations are in place.</p>
+
+    <h3>Threat Analysis</h3>
+
+    <div class="threat-grid">
+      <div class="threat-card threat-blocked" style="background: #FDF2F0;">
+        <div class="threat-header">
+          <div class="threat-icon">!</div>
+          <div class="threat-name">Threat: Code sharing</div>
+        </div>
+        <p class="card-desc" style="margin-bottom: 10px;">Member shares voucher code with a friend. Both go to different outlets simultaneously.</p>
+        <div class="card-desc">
+          <strong>Method 1:</strong> Cannot share a room check-in. PMS verifies the guest is actually in that room.<br>
+          <strong>Method 2:</strong> Friend cannot generate the secure token without login access to the member's account or the recipient's email.<br>
+          <strong>Method 3 (fallback):</strong> Vulnerable — code can be shared. Mitigated by monitoring and restricted staff access.<br>
+          <strong>All methods:</strong> Backend prevents double utilization regardless.
+        </div>
+      </div>
+
+      <div class="threat-card threat-blocked" style="background: #FDF2F0;">
+        <div class="threat-header">
+          <div class="threat-icon">!</div>
+          <div class="threat-name">Threat: Staff collusion</div>
+        </div>
+        <p class="card-desc" style="margin-bottom: 10px;">Rogue staff sees voucher list, shares codes with accomplices who visit the outlet.</p>
+        <div class="card-desc">
+          <strong>Method 1:</strong> Staff sees voucher details, but only for verified in-house guests via PMS. Cannot browse arbitrary member vouchers. Staff could share the code, but knowing the code alone is not enough to utilize the voucher (the accomplice would still need a valid secure token or room lookup).<br>
+          <strong>Method 2:</strong> Staff may see the voucher code on the details screen after scanning the QR. However, the code alone is insufficient — utilization requires the secure token from the QR. A shared code cannot be used through normal methods.<br>
+          <strong>Method 3 (fallback):</strong> Most vulnerable — staff sees the code and the code is sufficient for utilization via this method. Mitigated by restricting fallback access to limited/senior staff and monitoring usage patterns.
+        </div>
+      </div>
+
+      <div class="threat-card threat-accepted" style="background: #FEF9E7;">
+        <div class="threat-header">
+          <div class="threat-icon">~</div>
+          <div class="threat-name">Accepted risk: Room impersonation</div>
+        </div>
+        <p class="card-desc" style="margin-bottom: 10px;">Non-guest approaches staff and claims a room number to use a staying guest's voucher.</p>
+        <div class="card-desc">
+          <strong>Accepted</strong> for guest convenience at a luxury hotel. Mitigations: staff training to verify guest identity, audit logging of all lookups, optional photo match if PMS stores guest photos.
+        </div>
+      </div>
+
+      <div class="threat-card threat-accepted" style="background: #FEF9E7;">
+        <div class="threat-header">
+          <div class="threat-icon">~</div>
+          <div class="threat-name">Accepted risk: Staff browsing rooms</div>
+        </div>
+        <p class="card-desc" style="margin-bottom: 10px;">Staff tries different room numbers on Field App to discover available vouchers.</p>
+        <div class="card-desc">
+          <strong>Accepted</strong> as a trade-off for the in-house guest flow. Mitigations: audit trail of all searches, anomaly detection on unusual patterns, restrict searches to currently assigned outlets/areas.
+        </div>
+      </div>
+    </div>
+
+    <h3>Anti-Double-Utilization</h3>
+    <p>Double utilization prevention remains <strong>fully system-managed at the backend level</strong>. Regardless of which method is used, the system marks the voucher as utilized upon staff confirmation. Any subsequent attempt — at any outlet, by any method — is rejected immediately. This is unchanged from the current system.</p>
+
+    <h3>QR Token Approach (Open for Decision)</h3>
+    <p>The QR code must contain more than the plain voucher code to prevent code-sharing fraud. Several approaches are viable:</p>
+
+    <div class="card-grid single" style="margin-top: 16px;">
+      <div class="card card-blue">
+        <div class="card-title">Option A: Signed JWT (JSON Web Token)</div>
+        <div class="card-desc">
+          QR encodes a short-lived token signed with a server-side secret. Contains voucher ID + member/recipient ID + expiry timestamp. Cannot be forged. Can include a short TTL (e.g., 5–10 minutes) to prevent screenshot sharing. This is the most standard approach for token-based verification.
+        </div>
+      </div>
+    </div>
+    <div class="card-grid single" style="margin-top: 0;">
+      <div class="card card-blue">
+        <div class="card-title">Option B: HMAC-signed code</div>
+        <div class="card-desc">
+          Simpler variant: voucher code + a hash (HMAC) that proves it was generated by the server. Lighter than JWT, same core principle — the code alone is insufficient without the server-generated signature.
+        </div>
+      </div>
+    </div>
+    <div class="card-grid single" style="margin-top: 0;">
+      <div class="card card-blue">
+        <div class="card-title">Option C: One-time dynamic code</div>
+        <div class="card-desc">
+          System generates a fresh, short-lived code each time the member opens the QR screen. Expires in minutes. Strongest protection against screenshots and sharing, but requires the member to be online when showing the QR.
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout-blue">
+      <div class="callout-icon">💡</div>
+      <div class="callout-body">
+        <strong>Recommendation:</strong> The specific token approach should be decided during technical design. The key requirement is that the QR encodes something that cannot be reproduced by knowing only the voucher code, and ideally has a short expiry window to limit screenshot sharing.
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ==================== SECTION 5: STAFF WEB TOOL ==================== -->
+  <div class="section">
+    <div class="section-num">Section 2.6</div>
+    <h2 class="section-title">Staff Web Tool</h2>
+
+    <p>To avoid the guest-initiated outlet QR flows proposed in the initial design, a lightweight staff-facing web tool is introduced for outlets without the Field App. This is a net-new tool — it enables staff at these outlets to scan voucher QR codes and confirm utilization via a browser, without requiring a native app install.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">What it is</div>
+        <div class="card-desc">A web-based tool (no app install) that lets outlet staff scan voucher QR codes and confirm utilization. Accessed via smartphone browser.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">QR scanning via browser</div>
+        <div class="card-desc">Uses browser camera API with JavaScript-based decoding. Works on Safari 11+ (iOS 11+) and Chrome on Android 6.0+. HTTPS required. Slightly slower than native app (1–2 seconds extra).</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Security</div>
+        <div class="card-desc">Staff authenticates with credentials scoped to their outlet. Session management via secure tokens. Only utilization actions permitted — no admin functions.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Development scope</div>
+        <div class="card-desc">Single-page web app: login, scan/search, voucher details, confirm button. Calls same backend APIs as Field App. Estimated a few weeks of development.</div>
+      </div>
+    </div>
+
+    <div class="callout callout-green">
+      <div class="callout-icon">✓</div>
+      <div class="callout-body">
+        <strong>Compatibility:</strong> Any smartphone from 2016+ with a modern browser (Chrome or Safari). The main variable is autofocus quality — very cheap phones may be slightly slower to lock onto QR codes. For staff devices at AYANA outlets, this should not be an issue.
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ==================== SECTION 6: OPEN ITEMS ==================== -->
+  <div class="section">
+    <div class="section-num">Section 2.7</div>
+    <h2 class="section-title">Open Items & Dependencies</h2>
+
+    <div class="card card-accent" style="margin: 16px 0;">
+      <div class="card-title">AYANA Rewards voucher integration to Field App</div>
+      <div class="card-desc">
+        The Field App already has PMS integration (room search, guest name, membership tier). What's missing is AYANA Rewards voucher data — staff needs to see a guest's available vouchers when looking up a room. This is the primary dependency for Method 1 (room lookup).
+      </div>
+      <div style="margin-top: 8px;"><span class="tag tag-red">Blocker for Method 1</span></div>
+    </div>
+
+    <div class="card card-accent" style="margin: 16px 0;">
+      <div class="card-title">Staff web tool development</div>
+      <div class="card-desc">
+        Required for non-Field-App outlets to support Method 2 (QR scan) without guest-initiated workarounds. This is a new build — lightweight single-page web app with QR scanning capability.
+      </div>
+      <div style="margin-top: 8px;"><span class="tag tag-amber">Required for full rollout</span></div>
+    </div>
+
+    <div class="card card-accent" style="margin: 16px 0;">
+      <div class="card-title">Audit logging scope</div>
+      <div class="card-desc">
+        Utilization events (who utilized which voucher, when, via which method) should be logged — this is standard and likely already planned. The open question is whether to also log <em>every voucher view/lookup</em> that doesn't result in utilization. Comprehensive logging provides a paper trail for investigating fraud, but generates a large volume of data that may never be reviewed. Consider logging utilization events as a baseline, and only adding view-level logging if fraud patterns emerge or if audit requirements demand it.
+      </div>
+      <div style="margin-top: 8px;"><span class="tag tag-blue">Design decision</span></div>
+    </div>
+
+    <div class="card card-accent" style="margin: 16px 0;">
+      <div class="card-title">QR token technical design</div>
+      <div class="card-desc">
+        The specific token approach for the QR code (JWT, HMAC, or dynamic code) needs to be decided during technical design. See Section 5.3 for options.
+      </div>
+      <div style="margin-top: 8px;"><span class="tag tag-blue">Technical design decision</span></div>
+    </div>
+
+    <div class="card card-accent" style="margin: 16px 0;">
+      <div class="card-title">Transition period</div>
+      <div class="card-desc">
+        Until Rewards voucher integration is live on the Field App, all properties default to Method 2 (QR scan) for all guests, including staying guests. The in-house guest flow (Method 1) becomes available per-property as the integration rolls out. This means the current manual code lookup process continues as-is during the transition.
+      </div>
+      <div style="margin-top: 8px;"><span class="tag tag-gray">Phased rollout</span></div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ==================== APPENDIX ==================== -->
+  <div class="section" id="appendix">
+    <div class="section-num">Appendix</div>
+    <h2 class="section-title">Full Initial Proposed Utilization Matrix</h2>
+
+    <p class="muted small">Source: FigJam — AYANA Rewards Operations board, "Voucher Utilization Flow" table. Captured May 2026.</p>
+
+    <table class="appendix-table" style="margin-top: 16px;">
+      <tr>
+        <th>Category</th>
+        <th>Additional Info</th>
+        <th>When</th>
+        <th>Utilize By</th>
+        <th>Has Field App (Self)</th>
+        <th>Has Field App (Others)</th>
+        <th>No Field App (Self)</th>
+        <th>No Field App (Others)</th>
+      </tr>
+      <tr>
+        <td><strong>Hotel</strong></td>
+        <td>Stay Date, # Rooms, Notes (opt)</td>
+        <td>After checkout</td>
+        <td>Rewards admin (Ops Dashboard)</td>
+        <td>N/A</td>
+        <td>N/A</td>
+        <td>N/A</td>
+        <td>N/A</td>
+      </tr>
+      <tr>
+        <td><strong>Dining</strong></td>
+        <td>Notes (opt)</td>
+        <td>After consume (payment method)</td>
+        <td>Member / outlet staff</td>
+        <td>Staff via Field App (no QR); Member & staff scan QR on Rewards site</td>
+        <td>Member & staff scan QR on redemption email</td>
+        <td>Member scan outlet QR; Via Rewards website</td>
+        <td>Guest scan outlet QR; Via Utilization Landing Page</td>
+      </tr>
+      <tr>
+        <td><strong>Wellness & Recreation</strong></td>
+        <td>Notes (opt)</td>
+        <td>After consume (payment method)</td>
+        <td>Member / outlet staff</td>
+        <td>Staff via Field App (no QR); Member & staff scan QR on Rewards site</td>
+        <td>Member & staff scan QR on redemption email</td>
+        <td>Member scan outlet QR; Via Rewards website</td>
+        <td>Guest scan outlet QR; Via Utilization Landing Page</td>
+      </tr>
+      <tr>
+        <td><strong>Gift voucher – hotel</strong></td>
+        <td>Date, Confirm #, Notes (opt)</td>
+        <td>Self: after resort credit / consume; Others: after gift cert issued</td>
+        <td>Resort Credit: admin; Payment: member</td>
+        <td>As payment: staff (no QR) or member & staff</td>
+        <td>N/A (convert to Gift Certificate)</td>
+        <td>As payment: member scan outlet QR; Via Rewards website</td>
+        <td>N/A (convert to Gift Certificate)</td>
+      </tr>
+      <tr>
+        <td><strong>Gift voucher – restaurant</strong></td>
+        <td>Notes (opt)</td>
+        <td>After consume (payment method)</td>
+        <td>Member / outlet staff</td>
+        <td>Staff via Field App (no QR); Member & staff scan QR on Rewards site</td>
+        <td>Member & staff scan QR on redemption email</td>
+        <td>Member scan outlet QR; Via Rewards website</td>
+        <td>Guest scan outlet QR; Via Utilization Landing Page</td>
+      </tr>
+      <tr>
+        <td><strong>Retail collection</strong></td>
+        <td>Notes (opt)</td>
+        <td>After consume / item pickup</td>
+        <td>Member / outlet staff</td>
+        <td>Staff via Field App (no QR); Member & staff scan QR on Rewards site</td>
+        <td>Member & staff scan QR on redemption email</td>
+        <td>Member scan outlet QR; Via Rewards website</td>
+        <td>Guest scan outlet QR; Via Utilization Landing Page</td>
+      </tr>
+      <tr>
+        <td><strong>Business & Travel – Points Exchange</strong></td>
+        <td>Krisflyer: Account ID, Name (mandatory); Flow: Notes (opt)</td>
+        <td>After miles / coins issued</td>
+        <td>Rewards admin (Ops Dashboard)</td>
+        <td>N/A</td>
+        <td>N/A</td>
+        <td>N/A</td>
+        <td>N/A</td>
+      </tr>
+      <tr>
+        <td><strong>Business & Travel – Others</strong></td>
+        <td>Notes (opt)</td>
+        <td>After consume / item</td>
+        <td>Member / outlet staff</td>
+        <td>Staff via Field App (no QR); Member & staff scan QR on Rewards site</td>
+        <td>Member & staff scan QR on redemption email</td>
+        <td>Member scan outlet QR; Via Rewards website</td>
+        <td>Guest scan outlet QR; Via Utilization Landing Page</td>
+      </tr>
+    </table>
+  </div>
+
+</div>
+</body>
+</html>
