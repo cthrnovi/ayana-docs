@@ -5,40 +5,59 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AYANA Rewards — Voucher Redemption & Utilization Flow</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap');
 
   :root {
-    --blue: #1B4F72;
-    --dark: #2C3E50;
-    --accent: #2980B9;
-    --teal: #0F6E56;
-    --purple: #6C3483;
-    --coral: #C0392B;
-    --amber: #D4AC0D;
-    --gray-50: #F8F9FA;
-    --gray-100: #F1F3F5;
-    --gray-200: #E9ECEF;
-    --gray-300: #DEE2E6;
-    --gray-400: #ADB5BD;
-    --gray-600: #6C757D;
-    --gray-800: #343A40;
-    --font: 'Plus Jakarta Sans', -apple-system, sans-serif;
+    /* Surface */
+    --surface-primary: #FDFDFA;
+    --surface-secondary: #F6F3E7;
+    --surface-tertiary: #EEEAD9;
+    --surface-inverse: #343331;
+    --surface-positive: #CBEBC5;
+    --surface-destructive: #FFDAD6;
+    --surface-warning: #FFF1D7;
+
+    /* Content */
+    --content-primary: #333333;
+    --content-secondary: #666666;
+    --content-tertiary: #999999;
+    --content-inverse: #FFFFFF;
+    --content-link: #03ADE5;
+    --content-positive: #27723A;
+    --content-destructive: #B51B1A;
+    --content-warning: #81682C;
+
+    /* Stroke */
+    --stroke-primary: #666666;
+    --stroke-secondary: rgba(102,102,102,0.4);
+
+    /* Button */
+    --button-primary: #736B5C;
+    --button-secondary: #D9D5C7;
+
+    /* Legacy aliases for color variant classes */
+    --warm-brown: #7B6B5D;
+
+    /* Fonts */
+    --font-body: 'Inter', sans-serif;
+    --font-display: 'AyanaSans', 'Inter', sans-serif;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    font-family: var(--font);
-    color: var(--gray-800);
-    line-height: 1.7;
-    background: #fff;
-    font-size: 15px;
+    font-family: var(--font-body);
+    color: var(--content-primary);
+    line-height: 1.5;
+    background: var(--surface-primary);
+    font-size: 14px;
+    font-weight: 500;
   }
 
   .page {
     max-width: 1100px;
     margin: 0 auto;
-    padding: 60px 48px;
+    padding: 64px 48px;
   }
 
   /* --- COVER --- */
@@ -47,68 +66,73 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 80px 0 60px;
-    border-bottom: 3px solid var(--blue);
+    padding: 80px 0 64px;
+    border-bottom: 3px solid var(--stroke-primary);
     margin-bottom: 48px;
   }
   .cover-eyebrow {
-    font-size: 11px;
-    font-weight: 600;
+    font-size: 12px;
+    font-weight: 500;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: var(--accent);
+    color: var(--button-primary);
     margin-bottom: 16px;
   }
   .cover h1 {
-    font-size: 42px;
-    font-weight: 700;
-    color: var(--blue);
-    line-height: 1.15;
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--content-primary);
+    line-height: 1.2;
     margin-bottom: 12px;
   }
   .cover h2 {
-    font-size: 22px;
-    font-weight: 400;
-    color: var(--gray-600);
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--content-secondary);
     margin-bottom: 24px;
+    line-height: 1.5;
   }
   .cover-meta {
-    font-size: 13px;
-    color: var(--gray-400);
+    font-size: 12px;
+    color: var(--content-tertiary);
+    line-height: 1.5;
   }
 
   /* --- SECTIONS --- */
-  .section { margin-bottom: 56px; }
+  .section { margin-bottom: 64px; }
   .section-num {
-    font-size: 11px;
-    font-weight: 600;
+    font-size: 12px;
+    font-weight: 500;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 6px;
+    color: var(--button-primary);
+    margin-bottom: 8px;
   }
   h2.section-title {
-    font-size: 28px;
-    font-weight: 700;
-    color: var(--blue);
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--content-primary);
     margin-bottom: 20px;
-    line-height: 1.25;
+    line-height: 1.2;
   }
   h3 {
-    font-size: 20px;
-    font-weight: 600;
-    color: var(--dark);
-    margin: 32px 0 14px;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--content-primary);
+    margin: 32px 0 12px;
+    line-height: 1.2;
   }
   h4 {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
-    color: var(--dark);
-    margin: 24px 0 10px;
+    color: var(--content-primary);
+    margin: 24px 0 8px;
   }
-  p { margin-bottom: 14px; }
-  .muted { color: var(--gray-600); }
-  .small { font-size: 13px; }
+  p { margin-bottom: 12px; }
+  .muted { color: var(--content-secondary); }
+  .small { font-size: 12px; }
 
   /* --- FLOW DIAGRAMS --- */
   .flow-container {
@@ -127,8 +151,8 @@
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    background: var(--blue);
-    color: #fff;
+    background: var(--button-primary);
+    color: var(--content-inverse);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -152,18 +176,19 @@
     top: 36px;
     bottom: 0;
     width: 2px;
-    background: var(--gray-200);
+    background: var(--stroke-secondary);
   }
   .flow-title {
     font-weight: 600;
     font-size: 16px;
-    color: var(--dark);
+    color: var(--content-primary);
     margin-bottom: 4px;
+    line-height: 1.2;
   }
   .flow-desc {
     font-size: 14px;
-    color: var(--gray-600);
-    line-height: 1.6;
+    color: var(--content-secondary);
+    line-height: 1.5;
   }
 
   /* --- CARDS --- */
@@ -175,49 +200,50 @@
   }
   .card-grid.single { grid-template-columns: 1fr; }
   .card {
-    border-radius: 12px;
+    border-radius: 0;
     padding: 24px;
-    border: 1px solid var(--gray-200);
-    background: #fff;
+    border: 1px solid var(--stroke-secondary);
+    background: var(--surface-primary);
   }
   .card-accent {
-    border-left: 4px solid var(--accent);
+    border-left: 4px solid var(--button-primary);
   }
-  .card-teal { border-left: 4px solid var(--teal); background: #F0FAF6; }
-  .card-purple { border-left: 4px solid var(--purple); background: #F8F0FC; }
-  .card-coral { border-left: 4px solid var(--coral); background: #FDF2F0; }
-  .card-amber { border-left: 4px solid var(--amber); background: #FEFCF0; }
-  .card-blue { border-left: 4px solid var(--accent); background: #F0F7FD; }
-  .card-green { border-left: 4px solid var(--teal); }
-  .card-gray { background: var(--gray-50); border-color: var(--gray-200); }
+  .card-teal { border-left: 4px solid var(--content-positive); background: #F0F5F0; }
+  .card-purple { border-left: 4px solid var(--warm-brown); background: #F5F0ED; }
+  .card-coral { border-left: 4px solid var(--content-destructive); background: var(--surface-destructive); }
+  .card-amber { border-left: 4px solid var(--content-warning); background: var(--surface-warning); }
+  .card-blue { border-left: 4px solid var(--content-link); background: #E8F4FA; }
+  .card-green { border-left: 4px solid var(--content-positive); }
+  .card-gray { background: var(--surface-secondary); border-color: var(--stroke-secondary); }
   .card-title {
     font-weight: 600;
-    font-size: 15px;
-    margin-bottom: 6px;
-    color: var(--dark);
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: var(--content-primary);
   }
   .card-desc {
-    font-size: 13.5px;
-    color: var(--gray-600);
-    line-height: 1.6;
+    font-size: 14px;
+    color: var(--content-secondary);
+    line-height: 1.5;
   }
 
   /* --- TAGS --- */
   .tag {
     display: inline-block;
-    font-size: 11px;
-    font-weight: 600;
-    padding: 3px 10px;
-    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 12px;
+    border-radius: 24px;
     margin: 2px 2px;
+    line-height: 1.5;
   }
-  .tag-purple { background: #E8DAEF; color: #6C3483; }
-  .tag-teal { background: #D1F2EB; color: #0E6251; }
-  .tag-blue { background: #D6EAF8; color: #1A5276; }
-  .tag-amber { background: #FEF5E7; color: #7D6608; }
-  .tag-red { background: #FADBD8; color: #922B21; }
-  .tag-green { background: #D5F5E3; color: #1E8449; }
-  .tag-gray { background: var(--gray-200); color: var(--gray-600); }
+  .tag-purple { background: #EDE8E4; color: var(--warm-brown); }
+  .tag-teal { background: var(--surface-positive); color: var(--content-positive); }
+  .tag-blue { background: #E8F4FA; color: #0580AD; }
+  .tag-amber { background: var(--surface-warning); color: var(--content-warning); }
+  .tag-red { background: var(--surface-destructive); color: var(--content-destructive); }
+  .tag-green { background: var(--surface-positive); color: var(--content-positive); }
+  .tag-gray { background: var(--surface-tertiary); color: var(--content-secondary); }
 
   /* --- METRIC CARDS --- */
   .metric-grid {
@@ -227,21 +253,24 @@
     margin: 20px 0;
   }
   .metric {
-    background: var(--gray-50);
-    border-radius: 12px;
+    background: var(--surface-secondary);
+    border-radius: 0;
     padding: 20px 24px;
     text-align: center;
+    border: 1px solid var(--stroke-secondary);
   }
   .metric-num {
-    font-size: 36px;
-    font-weight: 700;
-    color: var(--blue);
-    line-height: 1.1;
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--content-primary);
+    line-height: 1.2;
   }
   .metric-label {
-    font-size: 13px;
-    color: var(--gray-600);
+    font-size: 12px;
+    color: var(--content-secondary);
     margin-top: 4px;
+    line-height: 1.5;
   }
 
   /* --- TABLES --- */
@@ -249,57 +278,57 @@
     width: 100%;
     border-collapse: collapse;
     margin: 16px 0;
-    font-size: 13.5px;
+    font-size: 14px;
   }
   th {
-    background: var(--blue);
-    color: #fff;
+    background: var(--button-primary);
+    color: var(--content-inverse);
     font-weight: 600;
     text-align: left;
-    padding: 12px 14px;
+    padding: 12px 16px;
     font-size: 12px;
     letter-spacing: 0.02em;
   }
-  th:first-child { border-radius: 8px 0 0 0; }
-  th:last-child { border-radius: 0 8px 0 0; }
+  th:first-child { border-radius: 0; }
+  th:last-child { border-radius: 0; }
   td {
-    padding: 12px 14px;
-    border-bottom: 1px solid var(--gray-200);
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--stroke-secondary);
     vertical-align: top;
     line-height: 1.5;
   }
-  tr:nth-child(even) td { background: var(--gray-50); }
-  tr:last-child td:first-child { border-radius: 0 0 0 8px; }
-  tr:last-child td:last-child { border-radius: 0 0 8px 0; }
+  tr:nth-child(even) td { background: var(--surface-secondary); }
+  tr:last-child td:first-child { border-radius: 0; }
+  tr:last-child td:last-child { border-radius: 0; }
 
   /* --- COMPARISON --- */
   .compare-row {
     display: grid;
     grid-template-columns: 200px 1fr 1fr;
-    border-bottom: 1px solid var(--gray-200);
+    border-bottom: 1px solid var(--stroke-secondary);
   }
   .compare-row.header {
-    background: var(--blue);
-    color: #fff;
+    background: var(--button-primary);
+    color: var(--content-inverse);
     font-weight: 600;
-    font-size: 13px;
-    border-radius: 8px 8px 0 0;
+    font-size: 12px;
+    border-radius: 0;
   }
   .compare-cell {
-    padding: 14px 16px;
-    font-size: 13.5px;
+    padding: 16px;
+    font-size: 14px;
     line-height: 1.5;
   }
-  .compare-row:not(.header):nth-child(even) { background: var(--gray-50); }
-  .compare-row:last-child { border-radius: 0 0 8px 8px; }
-  .compare-label { font-weight: 600; color: var(--dark); }
+  .compare-row:not(.header):nth-child(even) { background: var(--surface-secondary); }
+  .compare-row:last-child { border-radius: 0; }
+  .compare-label { font-weight: 600; color: var(--content-primary); }
 
   /* --- METHOD CARDS (large) --- */
   .method-card {
-    border-radius: 16px;
-    padding: 28px 32px;
+    border-radius: 0;
+    padding: 32px;
     margin: 16px 0;
-    border: 1px solid var(--gray-200);
+    border: 1px solid var(--stroke-secondary);
     position: relative;
     overflow: hidden;
   }
@@ -309,38 +338,41 @@
     left: 0;
     top: 0;
     bottom: 0;
-    width: 5px;
+    width: 4px;
   }
-  .method-1::before { background: var(--teal); }
-  .method-1 { background: linear-gradient(135deg, #F0FAF6, #fff); }
-  .method-2::before { background: var(--accent); }
-  .method-2 { background: linear-gradient(135deg, #F0F7FD, #fff); }
-  .method-3::before { background: var(--gray-600); }
-  .method-3 { background: linear-gradient(135deg, var(--gray-50), #fff); }
+  .method-1::before { background: var(--content-positive); }
+  .method-1 { background: #F0F5F0; }
+  .method-2::before { background: var(--content-link); }
+  .method-2 { background: #E8F4FA; }
+  .method-3::before { background: var(--content-secondary); }
+  .method-3 { background: var(--surface-secondary); }
   .method-badge {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    font-size: 11px;
-    font-weight: 700;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 500;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     padding: 4px 12px;
-    border-radius: 100px;
-    margin-bottom: 10px;
+    border-radius: 24px;
+    margin-bottom: 12px;
   }
-  .method-1 .method-badge { background: #D1F2EB; color: #0E6251; }
-  .method-2 .method-badge { background: #D6EAF8; color: #1A5276; }
+  .method-1 .method-badge { background: var(--surface-positive); color: var(--content-positive); }
+  .method-2 .method-badge { background: #E8F4FA; color: #0580AD; }
   .method-name {
-    font-size: 22px;
-    font-weight: 700;
-    color: var(--dark);
-    margin-bottom: 6px;
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--content-primary);
+    margin-bottom: 8px;
+    line-height: 1.2;
   }
   .method-sub {
     font-size: 14px;
-    color: var(--gray-600);
+    color: var(--content-secondary);
     margin-bottom: 16px;
+    line-height: 1.5;
   }
   .method-detail-grid {
     display: grid;
@@ -349,23 +381,24 @@
     margin-top: 16px;
   }
   .method-detail {
-    background: rgba(255,255,255,0.7);
-    border-radius: 10px;
+    background: rgba(253,253,250,0.7);
+    border-radius: 0;
     padding: 16px;
-    border: 1px solid var(--gray-200);
+    border: 1px solid var(--stroke-secondary);
   }
   .method-detail-label {
-    font-size: 11px;
-    font-weight: 600;
+    font-size: 12px;
+    font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: var(--gray-400);
-    margin-bottom: 6px;
+    color: var(--content-tertiary);
+    margin-bottom: 8px;
+    line-height: 1.5;
   }
   .method-detail-content {
-    font-size: 13.5px;
-    color: var(--gray-800);
-    line-height: 1.6;
+    font-size: 14px;
+    color: var(--content-primary);
+    line-height: 1.5;
   }
 
   /* --- THREAT CARDS --- */
@@ -376,15 +409,15 @@
     margin: 16px 0;
   }
   .threat-card {
-    border-radius: 12px;
+    border-radius: 0;
     padding: 20px 24px;
-    border: 1px solid var(--gray-200);
+    border: 1px solid var(--stroke-secondary);
   }
   .threat-header {
     display: flex;
     align-items: center;
     gap: 8px;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
   }
   .threat-icon {
     width: 28px;
@@ -394,26 +427,26 @@
     align-items: center;
     justify-content: center;
     font-size: 14px;
-    font-weight: 700;
+    font-weight: 600;
   }
-  .threat-blocked .threat-icon { background: #FADBD8; color: #C0392B; }
-  .threat-accepted .threat-icon { background: #FEF5E7; color: #D4AC0D; }
+  .threat-blocked .threat-icon { background: var(--surface-destructive); color: var(--content-destructive); }
+  .threat-accepted .threat-icon { background: var(--surface-warning); color: var(--content-warning); }
   .threat-name { font-weight: 600; font-size: 14px; }
 
   /* --- CALLOUT --- */
   .callout {
-    border-radius: 12px;
+    border-radius: 0;
     padding: 20px 24px;
     margin: 20px 0;
     display: flex;
-    gap: 14px;
+    gap: 16px;
     align-items: flex-start;
   }
-  .callout-blue { background: #EBF5FB; border: 1px solid #AED6F1; }
-  .callout-green { background: #EAFAF1; border: 1px solid #ABEBC6; }
-  .callout-amber { background: #FEF9E7; border: 1px solid #F9E79F; }
+  .callout-blue { background: #E8F4FA; border: 1px solid var(--stroke-secondary); }
+  .callout-green { background: #F0F5F0; border: 1px solid var(--stroke-secondary); }
+  .callout-amber { background: var(--surface-warning); border: 1px solid var(--stroke-secondary); }
   .callout-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
-  .callout-body { font-size: 14px; line-height: 1.6; }
+  .callout-body { font-size: 14px; line-height: 1.5; }
 
   /* --- OR DIVIDER --- */
   .or-divider {
@@ -422,30 +455,30 @@
     gap: 12px;
     margin: 12px 0;
     font-size: 12px;
-    font-weight: 600;
-    color: var(--gray-400);
+    font-weight: 500;
+    color: var(--content-tertiary);
     text-transform: uppercase;
     letter-spacing: 0.1em;
   }
   .or-divider::before, .or-divider::after {
     content: '';
     flex: 1;
-    border-top: 1px dashed var(--gray-300);
+    border-top: 1px dashed var(--stroke-secondary);
   }
 
   /* --- ARROW CONNECTOR --- */
   .arrow-down {
     display: flex;
     justify-content: center;
-    padding: 6px 0;
-    color: var(--gray-400);
-    font-size: 13px;
+    padding: 8px 0;
+    color: var(--content-tertiary);
+    font-size: 12px;
   }
 
   /* --- DIVIDER --- */
   .divider {
     border: none;
-    border-top: 1px solid var(--gray-200);
+    border-top: 1px solid var(--stroke-secondary);
     margin: 40px 0;
   }
 
@@ -457,8 +490,8 @@
 
   /* --- APPENDIX --- */
   .appendix-table { font-size: 12px; }
-  .appendix-table th { font-size: 11px; padding: 8px 10px; }
-  .appendix-table td { padding: 8px 10px; font-size: 11.5px; }
+  .appendix-table th { font-size: 12px; padding: 8px 12px; }
+  .appendix-table td { padding: 8px 12px; font-size: 12px; }
 
   /* --- LIST --- */
   ul.clean { list-style: none; padding: 0; }
@@ -466,14 +499,14 @@
     padding: 4px 0 4px 20px;
     position: relative;
     font-size: 14px;
-    line-height: 1.6;
+    line-height: 1.5;
   }
   ul.clean li::before {
     content: '';
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: var(--accent);
+    background: var(--button-primary);
     position: absolute;
     left: 0;
     top: 11px;
@@ -728,62 +761,62 @@
 
     <h3>1.4 Redemption Form Mockups</h3>
 
-    <p>The following mockups show the revised redemption form for four key variations. Based on the existing Figma design, with per-voucher structured fields (Date, Time) replaced by a single Notes field with dynamic placeholder text per category.</p>
+    <p>The following mockups show the revised redemption form for five key variations. Based on the existing Figma design, with per-voucher structured fields (Date, Time) replaced by a single Notes field with dynamic placeholder text per category.</p>
 
-    <!-- MOCKUP ROW 1: For Me + For Others -->
+    <!-- MOCKUP ROW 1: For Me (Dining) + For Others (Dining) -->
     <div style="display: flex; gap: 24px; flex-wrap: wrap; margin: 20px 0;">
 
       <!-- MOCKUP 1: For Me (Dining) -->
-      <div style="width: 300px; border: 1px solid var(--gray-200); border-radius: 16px; overflow: hidden; background: #fff; font-family: var(--font); font-size: 13px; box-shadow: 0 1px 4px rgba(0,0,0,0.06);">
-        <div style="padding: 14px 20px; border-bottom: 1px solid var(--gray-200); text-align: center; font-size: 11px; letter-spacing: 0.18em; font-weight: 600; color: var(--gray-800);">A Y A N A<br><span style="font-size: 8px; letter-spacing: 0.22em; font-weight: 400; color: var(--gray-400);">REWARDS</span></div>
+      <div style="width: 300px; border: 1px solid var(--stroke-secondary); overflow: hidden; background: var(--surface-primary); font-family: var(--font-body); font-size: 14px; font-weight: 500;">
+        <div style="padding: 14px 20px; border-bottom: 1px solid var(--stroke-secondary); text-align: center; font-size: 12px; letter-spacing: 0.18em; font-weight: 600; color: var(--content-primary);">A Y A N A<br><span style="font-size: 8px; letter-spacing: 0.22em; font-weight: 500; color: var(--content-tertiary);">REWARDS</span></div>
         <div style="padding: 16px 20px;">
-          <div style="background: var(--gray-50); border-radius: 10px; padding: 14px 16px; margin-bottom: 16px;">
-            <div style="font-weight: 600; font-size: 14px; color: var(--dark); margin-bottom: 4px;">Breakfast at Terrace Restaurant for 1 Pax</div>
-            <div style="font-size: 11px; color: var(--gray-600);">2,000 points · 3 vouchers</div>
+          <div style="background: var(--surface-secondary); padding: 14px 16px; margin-bottom: 16px;">
+            <div style="font-weight: 600; font-size: 14px; color: var(--content-primary); margin-bottom: 4px;">Breakfast at Terrace Restaurant for 1 Pax</div>
+            <div style="font-size: 12px; color: var(--content-secondary);">2,000 points · 3 vouchers</div>
           </div>
-          <div style="background: var(--gray-50); border-radius: 10px; padding: 14px 16px; margin-bottom: 16px;">
-            <div style="font-weight: 600; font-size: 12px; color: var(--dark); margin-bottom: 8px;">Redeem for whom?</div>
+          <div style="background: var(--surface-secondary); padding: 14px 16px; margin-bottom: 16px;">
+            <div style="font-weight: 600; font-size: 12px; color: var(--content-primary); margin-bottom: 8px;">Redeem for whom?</div>
             <div style="display: flex; gap: 24px;">
-              <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--dark);"><span style="width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--accent); display: flex; align-items: center; justify-content: center;"><span style="width: 8px; height: 8px; border-radius: 50%; background: var(--accent);"></span></span>For me</label>
-              <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--gray-600);"><span style="width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--gray-300);"></span>For other</label>
+              <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--content-primary);"><span style="width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--button-primary); display: flex; align-items: center; justify-content: center;"><span style="width: 8px; height: 8px; border-radius: 50%; background: var(--button-primary);"></span></span>For me</label>
+              <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--content-secondary);"><span style="width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--stroke-secondary);"></span>For other</label>
             </div>
           </div>
-          <div style="font-size: 11px; font-weight: 600; color: var(--dark); margin-bottom: 4px;">Additional Notes</div>
-          <div style="border: 1px solid var(--gray-200); border-radius: 6px; padding: 8px 10px; font-size: 11px; color: var(--gray-400); min-height: 48px; margin-bottom: 20px;">e.g. Tell us your preferred dates if any, or any other preferences (dietary etc)</div>
+          <div style="font-size: 12px; font-weight: 600; color: var(--content-primary); margin-bottom: 4px;">Additional Notes</div>
+          <div style="border: 1px solid var(--stroke-secondary); padding: 8px 12px; font-size: 12px; color: var(--content-tertiary); min-height: 48px; margin-bottom: 20px;">e.g. Tell us your preferred dates if any, or any other preferences (dietary etc)</div>
         </div>
-        <div style="padding: 14px 20px; border-top: 1px solid var(--gray-200); display: flex; align-items: center; justify-content: space-between;">
-          <div><span style="font-size: 11px; color: var(--gray-600);">Total Points</span><br><span style="font-weight: 600; font-size: 15px; color: var(--dark);">6,000</span></div>
-          <div style="background: var(--accent); color: #fff; padding: 10px 32px; border-radius: 8px; font-weight: 600; font-size: 13px; letter-spacing: 0.04em;">REDEEM</div>
+        <div style="padding: 14px 20px; border-top: 1px solid var(--stroke-secondary); display: flex; align-items: center; justify-content: space-between;">
+          <div><span style="font-size: 12px; color: var(--content-secondary);">Total Points</span><br><span style="font-weight: 600; font-size: 16px; color: var(--content-primary);">6,000</span></div>
+          <div style="background: var(--button-primary); color: var(--content-inverse); padding: 12px 32px; font-weight: 500; font-size: 14px; letter-spacing: 0.04em;">REDEEM</div>
         </div>
       </div>
 
       <!-- MOCKUP 2: For Others (Dining) -->
-      <div style="width: 300px; border: 1px solid var(--gray-200); border-radius: 16px; overflow: hidden; background: #fff; font-family: var(--font); font-size: 13px; box-shadow: 0 1px 4px rgba(0,0,0,0.06);">
-        <div style="padding: 14px 20px; border-bottom: 1px solid var(--gray-200); text-align: center; font-size: 11px; letter-spacing: 0.18em; font-weight: 600; color: var(--gray-800);">A Y A N A<br><span style="font-size: 8px; letter-spacing: 0.22em; font-weight: 400; color: var(--gray-400);">REWARDS</span></div>
+      <div style="width: 300px; border: 1px solid var(--stroke-secondary); overflow: hidden; background: var(--surface-primary); font-family: var(--font-body); font-size: 14px; font-weight: 500;">
+        <div style="padding: 14px 20px; border-bottom: 1px solid var(--stroke-secondary); text-align: center; font-size: 12px; letter-spacing: 0.18em; font-weight: 600; color: var(--content-primary);">A Y A N A<br><span style="font-size: 8px; letter-spacing: 0.22em; font-weight: 500; color: var(--content-tertiary);">REWARDS</span></div>
         <div style="padding: 16px 20px;">
-          <div style="background: var(--gray-50); border-radius: 10px; padding: 14px 16px; margin-bottom: 16px;">
-            <div style="font-weight: 600; font-size: 14px; color: var(--dark); margin-bottom: 4px;">Breakfast at Terrace Restaurant for 1 Pax</div>
-            <div style="font-size: 11px; color: var(--gray-600);">2,000 points · 1 voucher</div>
+          <div style="background: var(--surface-secondary); padding: 14px 16px; margin-bottom: 16px;">
+            <div style="font-weight: 600; font-size: 14px; color: var(--content-primary); margin-bottom: 4px;">Breakfast at Terrace Restaurant for 1 Pax</div>
+            <div style="font-size: 12px; color: var(--content-secondary);">2,000 points · 1 voucher</div>
           </div>
-          <div style="font-weight: 600; font-size: 12px; color: var(--dark); margin-bottom: 10px;">Redemption Info</div>
-          <div style="background: var(--gray-50); border-radius: 10px; padding: 14px 16px; margin-bottom: 16px;">
-            <div style="font-weight: 600; font-size: 12px; color: var(--dark); margin-bottom: 8px;">Redeem for whom?</div>
+          <div style="font-weight: 600; font-size: 12px; color: var(--content-primary); margin-bottom: 10px;">Redemption Info</div>
+          <div style="background: var(--surface-secondary); padding: 14px 16px; margin-bottom: 16px;">
+            <div style="font-weight: 600; font-size: 12px; color: var(--content-primary); margin-bottom: 8px;">Redeem for whom?</div>
             <div style="display: flex; gap: 24px; margin-bottom: 14px;">
-              <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--gray-600);"><span style="width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--gray-300);"></span>For me</label>
-              <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--dark);"><span style="width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--accent); display: flex; align-items: center; justify-content: center;"><span style="width: 8px; height: 8px; border-radius: 50%; background: var(--accent);"></span></span>For other</label>
+              <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--content-secondary);"><span style="width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--stroke-secondary);"></span>For me</label>
+              <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--content-primary);"><span style="width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--button-primary); display: flex; align-items: center; justify-content: center;"><span style="width: 8px; height: 8px; border-radius: 50%; background: var(--button-primary);"></span></span>For other</label>
             </div>
-            <div style="font-size: 11px; font-weight: 600; color: var(--dark); margin-bottom: 4px;">Receiver Name</div>
-            <div style="border: 1px solid var(--gray-200); border-radius: 6px; padding: 8px 10px; font-size: 12px; color: var(--dark); margin-bottom: 12px; background: #fff;">Sarah Johnson</div>
-            <div style="font-size: 11px; font-weight: 600; color: var(--dark); margin-bottom: 4px;">Receiver Email (Optional)</div>
-            <div style="border: 1px solid var(--gray-200); border-radius: 6px; padding: 8px 10px; font-size: 12px; color: var(--dark); margin-bottom: 4px; background: #fff;">sarah.j@email.com</div>
-            <div style="font-size: 10px; color: var(--gray-400);">We'll send the Redemption Voucher to this email.</div>
+            <div style="font-size: 12px; font-weight: 600; color: var(--content-primary); margin-bottom: 4px;">Receiver Name</div>
+            <div style="border: 1px solid var(--stroke-secondary); padding: 8px 12px; font-size: 12px; color: var(--content-primary); margin-bottom: 12px; background: var(--surface-primary);">Sarah Johnson</div>
+            <div style="font-size: 12px; font-weight: 600; color: var(--content-primary); margin-bottom: 4px;">Receiver Email (Optional)</div>
+            <div style="border: 1px solid var(--stroke-secondary); padding: 8px 12px; font-size: 12px; color: var(--content-primary); margin-bottom: 4px; background: var(--surface-primary);">sarah.j@email.com</div>
+            <div style="font-size: 12px; color: var(--content-tertiary);">We'll send the Redemption Voucher to this email.</div>
           </div>
-          <div style="font-size: 11px; font-weight: 600; color: var(--dark); margin-bottom: 4px;">Additional Notes</div>
-          <div style="border: 1px solid var(--gray-200); border-radius: 6px; padding: 8px 10px; font-size: 11px; color: var(--gray-400); min-height: 48px; margin-bottom: 20px;">e.g. Tell us your preferred dates if any, or any other preferences (dietary etc)</div>
+          <div style="font-size: 12px; font-weight: 600; color: var(--content-primary); margin-bottom: 4px;">Additional Notes</div>
+          <div style="border: 1px solid var(--stroke-secondary); padding: 8px 12px; font-size: 12px; color: var(--content-tertiary); min-height: 48px; margin-bottom: 20px;">e.g. Tell us your preferred dates if any, or any other preferences (dietary etc)</div>
         </div>
-        <div style="padding: 14px 20px; border-top: 1px solid var(--gray-200); display: flex; align-items: center; justify-content: space-between;">
-          <div><span style="font-size: 11px; color: var(--gray-600);">Total Points</span><br><span style="font-weight: 600; font-size: 15px; color: var(--dark);">2,000</span></div>
-          <div style="background: var(--accent); color: #fff; padding: 10px 32px; border-radius: 8px; font-weight: 600; font-size: 13px; letter-spacing: 0.04em;">REDEEM</div>
+        <div style="padding: 14px 20px; border-top: 1px solid var(--stroke-secondary); display: flex; align-items: center; justify-content: space-between;">
+          <div><span style="font-size: 12px; color: var(--content-secondary);">Total Points</span><br><span style="font-weight: 600; font-size: 16px; color: var(--content-primary);">2,000</span></div>
+          <div style="background: var(--button-primary); color: var(--content-inverse); padding: 12px 32px; font-weight: 500; font-size: 14px; letter-spacing: 0.04em;">REDEEM</div>
         </div>
       </div>
 
@@ -791,51 +824,82 @@
 
     <p class="small muted" style="margin-top: 0;">Left: Dining redemption (for me) — single Notes field with dynamic placeholder. Right: Dining redemption (for others) — receiver fields + Notes with same placeholder.</p>
 
-    <!-- MOCKUP ROW 2: Points Exchange (Flow with helper) + Points Exchange (Krisflyer without helper) -->
+    <!-- MOCKUP ROW 2: Hotel (dynamic placeholder) -->
     <div style="display: flex; gap: 24px; flex-wrap: wrap; margin: 20px 0;">
 
-      <!-- MOCKUP 3: Points Exchange — Flow Coins (with helper text) -->
-      <div style="width: 300px; border: 1px solid var(--gray-200); border-radius: 16px; overflow: hidden; background: #fff; font-family: var(--font); font-size: 13px; box-shadow: 0 1px 4px rgba(0,0,0,0.06);">
-        <div style="padding: 14px 20px; border-bottom: 1px solid var(--gray-200); text-align: center; font-size: 11px; letter-spacing: 0.18em; font-weight: 600; color: var(--gray-800);">A Y A N A<br><span style="font-size: 8px; letter-spacing: 0.22em; font-weight: 400; color: var(--gray-400);">REWARDS</span></div>
+      <!-- MOCKUP 3: Hotel voucher (For Me) — dynamic placeholder -->
+      <div style="width: 300px; border: 1px solid var(--stroke-secondary); overflow: hidden; background: var(--surface-primary); font-family: var(--font-body); font-size: 14px; font-weight: 500;">
+        <div style="padding: 14px 20px; border-bottom: 1px solid var(--stroke-secondary); text-align: center; font-size: 12px; letter-spacing: 0.18em; font-weight: 600; color: var(--content-primary);">A Y A N A<br><span style="font-size: 8px; letter-spacing: 0.22em; font-weight: 500; color: var(--content-tertiary);">REWARDS</span></div>
         <div style="padding: 16px 20px;">
-          <div style="background: var(--gray-50); border-radius: 10px; padding: 14px 16px; margin-bottom: 16px;">
-            <div style="font-weight: 600; font-size: 14px; color: var(--dark); margin-bottom: 4px;">Convert to Flow Coins</div>
-            <div style="font-size: 11px; color: var(--gray-600);">5,000 points · 1 voucher</div>
+          <div style="background: var(--surface-secondary); padding: 14px 16px; margin-bottom: 16px;">
+            <div style="font-weight: 600; font-size: 14px; color: var(--content-primary); margin-bottom: 4px;">One Night Stay at Resort View Room</div>
+            <div style="font-size: 12px; color: var(--content-secondary);">15,000 points · 2 vouchers</div>
           </div>
-          <div style="font-weight: 600; font-size: 12px; color: var(--dark); margin-bottom: 10px;">Account Details <span style="font-weight: 400; color: var(--coral); font-size: 10px;">(Required)</span></div>
-          <div style="font-size: 11px; font-weight: 600; color: var(--dark); margin-bottom: 4px;">Account ID*</div>
-          <div style="border: 1px solid var(--gray-200); border-radius: 6px; padding: 8px 10px; font-size: 12px; color: var(--dark); margin-bottom: 4px;">user@email.com</div>
-          <div style="font-size: 10px; color: var(--accent); margin-bottom: 12px;">Don't have a Flow account? No worries — enter your email and we'll set it up for you.</div>
-          <div style="font-size: 11px; font-weight: 600; color: var(--dark); margin-bottom: 4px;">Name*</div>
-          <div style="border: 1px solid var(--gray-200); border-radius: 6px; padding: 8px 10px; font-size: 12px; color: var(--dark); margin-bottom: 14px;">John Doe</div>
-          <div style="font-size: 11px; font-weight: 600; color: var(--dark); margin-bottom: 4px;">Notes</div>
-          <div style="border: 1px solid var(--gray-200); border-radius: 6px; padding: 8px 10px; font-size: 11px; color: var(--gray-400); min-height: 36px;">e.g. Any additional information</div>
+          <div style="background: var(--surface-secondary); padding: 14px 16px; margin-bottom: 16px;">
+            <div style="font-weight: 600; font-size: 12px; color: var(--content-primary); margin-bottom: 8px;">Redeem for whom?</div>
+            <div style="display: flex; gap: 24px;">
+              <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--content-primary);"><span style="width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--button-primary); display: flex; align-items: center; justify-content: center;"><span style="width: 8px; height: 8px; border-radius: 50%; background: var(--button-primary);"></span></span>For me</label>
+              <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--content-secondary);"><span style="width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--stroke-secondary);"></span>For other</label>
+            </div>
+          </div>
+          <div style="font-size: 12px; font-weight: 600; color: var(--content-primary); margin-bottom: 4px;">Additional Notes</div>
+          <div style="border: 1px solid var(--stroke-secondary); padding: 8px 12px; font-size: 12px; color: var(--content-tertiary); min-height: 48px; margin-bottom: 20px;">e.g. Preferred stay date, number of rooms, or any special requests</div>
         </div>
-        <div style="padding: 14px 20px; border-top: 1px solid var(--gray-200); display: flex; align-items: center; justify-content: space-between;">
-          <div><span style="font-size: 11px; color: var(--gray-600);">Total Points</span><br><span style="font-weight: 600; font-size: 15px; color: var(--dark);">5,000</span></div>
-          <div style="background: var(--accent); color: #fff; padding: 10px 32px; border-radius: 8px; font-weight: 600; font-size: 13px; letter-spacing: 0.04em;">REDEEM</div>
+        <div style="padding: 14px 20px; border-top: 1px solid var(--stroke-secondary); display: flex; align-items: center; justify-content: space-between;">
+          <div><span style="font-size: 12px; color: var(--content-secondary);">Total Points</span><br><span style="font-weight: 600; font-size: 16px; color: var(--content-primary);">30,000</span></div>
+          <div style="background: var(--button-primary); color: var(--content-inverse); padding: 12px 32px; font-weight: 500; font-size: 14px; letter-spacing: 0.04em;">REDEEM</div>
         </div>
       </div>
 
-      <!-- MOCKUP 4: Points Exchange — Krisflyer (no helper text) -->
-      <div style="width: 300px; border: 1px solid var(--gray-200); border-radius: 16px; overflow: hidden; background: #fff; font-family: var(--font); font-size: 13px; box-shadow: 0 1px 4px rgba(0,0,0,0.06);">
-        <div style="padding: 14px 20px; border-bottom: 1px solid var(--gray-200); text-align: center; font-size: 11px; letter-spacing: 0.18em; font-weight: 600; color: var(--gray-800);">A Y A N A<br><span style="font-size: 8px; letter-spacing: 0.22em; font-weight: 400; color: var(--gray-400);">REWARDS</span></div>
+    </div>
+
+    <p class="small muted" style="margin-top: 0;">Hotel voucher — dynamic placeholder guides the member to share stay date, room count, or special requests. Structured fields (Stay Date, # Rooms) removed; handled during booking/fulfillment instead.</p>
+
+    <!-- MOCKUP ROW 3: Points Exchange (Flow with helper) + Points Exchange (Krisflyer without helper) -->
+    <div style="display: flex; gap: 24px; flex-wrap: wrap; margin: 20px 0;">
+
+      <!-- MOCKUP 4: Points Exchange — Flow Coins (with helper text) -->
+      <div style="width: 300px; border: 1px solid var(--stroke-secondary); overflow: hidden; background: var(--surface-primary); font-family: var(--font-body); font-size: 14px; font-weight: 500;">
+        <div style="padding: 14px 20px; border-bottom: 1px solid var(--stroke-secondary); text-align: center; font-size: 12px; letter-spacing: 0.18em; font-weight: 600; color: var(--content-primary);">A Y A N A<br><span style="font-size: 8px; letter-spacing: 0.22em; font-weight: 500; color: var(--content-tertiary);">REWARDS</span></div>
         <div style="padding: 16px 20px;">
-          <div style="background: var(--gray-50); border-radius: 10px; padding: 14px 16px; margin-bottom: 16px;">
-            <div style="font-weight: 600; font-size: 14px; color: var(--dark); margin-bottom: 4px;">Convert to Krisflyer Miles</div>
-            <div style="font-size: 11px; color: var(--gray-600);">8,000 points · 1 voucher</div>
+          <div style="background: var(--surface-secondary); padding: 14px 16px; margin-bottom: 16px;">
+            <div style="font-weight: 600; font-size: 14px; color: var(--content-primary); margin-bottom: 4px;">Convert to Flow Coins</div>
+            <div style="font-size: 12px; color: var(--content-secondary);">5,000 points · 1 voucher</div>
           </div>
-          <div style="font-weight: 600; font-size: 12px; color: var(--dark); margin-bottom: 10px;">Account Details <span style="font-weight: 400; color: var(--coral); font-size: 10px;">(Required)</span></div>
-          <div style="font-size: 11px; font-weight: 600; color: var(--dark); margin-bottom: 4px;">Account ID*</div>
-          <div style="border: 1px solid var(--gray-200); border-radius: 6px; padding: 8px 10px; font-size: 12px; color: var(--dark); margin-bottom: 14px;">1234567890</div>
-          <div style="font-size: 11px; font-weight: 600; color: var(--dark); margin-bottom: 4px;">Name*</div>
-          <div style="border: 1px solid var(--gray-200); border-radius: 6px; padding: 8px 10px; font-size: 12px; color: var(--dark); margin-bottom: 14px;">John Doe</div>
-          <div style="font-size: 11px; font-weight: 600; color: var(--dark); margin-bottom: 4px;">Notes</div>
-          <div style="border: 1px solid var(--gray-200); border-radius: 6px; padding: 8px 10px; font-size: 11px; color: var(--gray-400); min-height: 36px;">e.g. Any additional information</div>
+          <div style="font-weight: 600; font-size: 12px; color: var(--content-primary); margin-bottom: 10px;">Account Details <span style="font-weight: 500; color: var(--content-destructive); font-size: 12px;">(Required)</span></div>
+          <div style="font-size: 12px; font-weight: 600; color: var(--content-primary); margin-bottom: 4px;">Account ID*</div>
+          <div style="border: 1px solid var(--stroke-secondary); padding: 8px 12px; font-size: 12px; color: var(--content-primary); margin-bottom: 4px;">user@email.com</div>
+          <div style="font-size: 12px; color: var(--content-link); margin-bottom: 12px;">Don't have a Flow account? No worries — enter your email and we'll set it up for you.</div>
+          <div style="font-size: 12px; font-weight: 600; color: var(--content-primary); margin-bottom: 4px;">Name*</div>
+          <div style="border: 1px solid var(--stroke-secondary); padding: 8px 12px; font-size: 12px; color: var(--content-primary); margin-bottom: 14px;">John Doe</div>
+          <div style="font-size: 12px; font-weight: 600; color: var(--content-primary); margin-bottom: 4px;">Notes</div>
+          <div style="border: 1px solid var(--stroke-secondary); padding: 8px 12px; font-size: 12px; color: var(--content-tertiary); min-height: 36px;">e.g. Any additional information</div>
         </div>
-        <div style="padding: 14px 20px; border-top: 1px solid var(--gray-200); display: flex; align-items: center; justify-content: space-between;">
-          <div><span style="font-size: 11px; color: var(--gray-600);">Total Points</span><br><span style="font-weight: 600; font-size: 15px; color: var(--dark);">8,000</span></div>
-          <div style="background: var(--accent); color: #fff; padding: 10px 32px; border-radius: 8px; font-weight: 600; font-size: 13px; letter-spacing: 0.04em;">REDEEM</div>
+        <div style="padding: 14px 20px; border-top: 1px solid var(--stroke-secondary); display: flex; align-items: center; justify-content: space-between;">
+          <div><span style="font-size: 12px; color: var(--content-secondary);">Total Points</span><br><span style="font-weight: 600; font-size: 16px; color: var(--content-primary);">5,000</span></div>
+          <div style="background: var(--button-primary); color: var(--content-inverse); padding: 12px 32px; font-weight: 500; font-size: 14px; letter-spacing: 0.04em;">REDEEM</div>
+        </div>
+      </div>
+
+      <!-- MOCKUP 5: Points Exchange — Krisflyer (no helper text) -->
+      <div style="width: 300px; border: 1px solid var(--stroke-secondary); overflow: hidden; background: var(--surface-primary); font-family: var(--font-body); font-size: 14px; font-weight: 500;">
+        <div style="padding: 14px 20px; border-bottom: 1px solid var(--stroke-secondary); text-align: center; font-size: 12px; letter-spacing: 0.18em; font-weight: 600; color: var(--content-primary);">A Y A N A<br><span style="font-size: 8px; letter-spacing: 0.22em; font-weight: 500; color: var(--content-tertiary);">REWARDS</span></div>
+        <div style="padding: 16px 20px;">
+          <div style="background: var(--surface-secondary); padding: 14px 16px; margin-bottom: 16px;">
+            <div style="font-weight: 600; font-size: 14px; color: var(--content-primary); margin-bottom: 4px;">Convert to Krisflyer Miles</div>
+            <div style="font-size: 12px; color: var(--content-secondary);">8,000 points · 1 voucher</div>
+          </div>
+          <div style="font-weight: 600; font-size: 12px; color: var(--content-primary); margin-bottom: 10px;">Account Details <span style="font-weight: 500; color: var(--content-destructive); font-size: 12px;">(Required)</span></div>
+          <div style="font-size: 12px; font-weight: 600; color: var(--content-primary); margin-bottom: 4px;">Account ID*</div>
+          <div style="border: 1px solid var(--stroke-secondary); padding: 8px 12px; font-size: 12px; color: var(--content-primary); margin-bottom: 14px;">1234567890</div>
+          <div style="font-size: 12px; font-weight: 600; color: var(--content-primary); margin-bottom: 4px;">Name*</div>
+          <div style="border: 1px solid var(--stroke-secondary); padding: 8px 12px; font-size: 12px; color: var(--content-primary); margin-bottom: 14px;">John Doe</div>
+          <div style="font-size: 12px; font-weight: 600; color: var(--content-primary); margin-bottom: 4px;">Notes</div>
+          <div style="border: 1px solid var(--stroke-secondary); padding: 8px 12px; font-size: 12px; color: var(--content-tertiary); min-height: 36px;">e.g. Any additional information</div>
+        </div>
+        <div style="padding: 14px 20px; border-top: 1px solid var(--stroke-secondary); display: flex; align-items: center; justify-content: space-between;">
+          <div><span style="font-size: 12px; color: var(--content-secondary);">Total Points</span><br><span style="font-weight: 600; font-size: 16px; color: var(--content-primary);">8,000</span></div>
+          <div style="background: var(--button-primary); color: var(--content-inverse); padding: 12px 32px; font-weight: 500; font-size: 14px; letter-spacing: 0.04em;">REDEEM</div>
         </div>
       </div>
 
@@ -904,7 +968,7 @@
     <div class="card card-amber" style="margin-top: 0;">
       <div class="card-title">Hybrid</div>
       <div class="card-desc">
-        <span class="tag tag-amber" style="margin-bottom: 6px;">Gift voucher – hotel</span><br>
+        <span class="tag" style="margin-bottom: 6px; background: var(--surface-primary); color: var(--content-warning); border: 1px solid var(--content-warning);">Gift voucher – hotel</span><br>
         For self-use: on-site utilization as payment method (same as other on-site vouchers).<br>
         For others: converts to a gift certificate, becoming admin-fulfilled.
       </div>
@@ -1046,28 +1110,28 @@
 
       <div class="flow-container">
         <div class="flow-step">
-          <div class="flow-num" style="background: var(--teal);">1</div>
+          <div class="flow-num" style="background: var(--content-positive);">1</div>
           <div class="flow-body">
             <div class="flow-title">Guest arrives at outlet</div>
             <div class="flow-desc">Identifies themselves verbally or staff recognizes them.</div>
           </div>
         </div>
         <div class="flow-step">
-          <div class="flow-num" style="background: var(--teal);">2</div>
+          <div class="flow-num" style="background: var(--content-positive);">2</div>
           <div class="flow-body">
             <div class="flow-title">Staff searches by room number or name</div>
             <div class="flow-desc">Using the Field App. System cross-checks with PMS to verify the guest is currently checked in.</div>
           </div>
         </div>
         <div class="flow-step">
-          <div class="flow-num" style="background: var(--teal);">3</div>
+          <div class="flow-num" style="background: var(--content-positive);">3</div>
           <div class="flow-body">
             <div class="flow-title">Field App shows guest's available vouchers</div>
             <div class="flow-desc">Only vouchers valid for that outlet are displayed.</div>
           </div>
         </div>
         <div class="flow-step">
-          <div class="flow-num" style="background: var(--teal);">4</div>
+          <div class="flow-num" style="background: var(--content-positive);">4</div>
           <div class="flow-body">
             <div class="flow-title">Staff selects voucher, guest confirms, done</div>
             <div class="flow-desc">One tap to mark as utilized. System records the transaction.</div>
@@ -1113,7 +1177,7 @@
 
       <div class="flow-container">
         <div class="flow-step">
-          <div class="flow-num" style="background: var(--accent);">1</div>
+          <div class="flow-num" style="background: var(--content-link);">1</div>
           <div class="flow-body">
             <div class="flow-title">Guest opens their voucher QR</div>
             <div class="flow-desc">
@@ -1123,21 +1187,21 @@
           </div>
         </div>
         <div class="flow-step">
-          <div class="flow-num" style="background: var(--accent);">2</div>
+          <div class="flow-num" style="background: var(--content-link);">2</div>
           <div class="flow-body">
             <div class="flow-title">Staff scans the QR</div>
             <div class="flow-desc">Using the Field App or the staff web tool (for non-Field-App outlets). The QR contains a secure token — not the plain voucher code (see Section 2.5 — QR Token Approach for token options).</div>
           </div>
         </div>
         <div class="flow-step">
-          <div class="flow-num" style="background: var(--accent);">3</div>
+          <div class="flow-num" style="background: var(--content-link);">3</div>
           <div class="flow-body">
             <div class="flow-title">System validates and shows voucher details</div>
             <div class="flow-desc">Decrypts/verifies the token, checks voucher is valid and not yet used, displays details to staff.</div>
           </div>
         </div>
         <div class="flow-step">
-          <div class="flow-num" style="background: var(--accent);">4</div>
+          <div class="flow-num" style="background: var(--content-link);">4</div>
           <div class="flow-body">
             <div class="flow-title">Staff confirms utilization</div>
             <div class="flow-desc">One tap. System marks voucher as used. Done.</div>
@@ -1177,27 +1241,27 @@
 
     <!-- METHOD 3 -->
     <div class="method-card method-3">
-      <div class="method-badge" style="background: var(--gray-200); color: var(--gray-600);">Method 3 &nbsp;·&nbsp; Fallback</div>
+      <div class="method-badge" style="background: var(--surface-tertiary); color: var(--content-secondary);">Method 3 &nbsp;·&nbsp; Fallback</div>
       <div class="method-name">Manual Code Entry</div>
       <div class="method-sub">For edge cases where QR scanning is not possible (camera not working, guest unable to show voucher on phone). Staff enters the voucher code manually.</div>
 
       <div class="flow-container">
         <div class="flow-step">
-          <div class="flow-num" style="background: var(--gray-600);">1</div>
+          <div class="flow-num" style="background: var(--content-secondary);">1</div>
           <div class="flow-body">
             <div class="flow-title">Guest provides voucher code</div>
             <div class="flow-desc">Guest reads the code aloud from their phone/email, or shows the code on screen without QR.</div>
           </div>
         </div>
         <div class="flow-step">
-          <div class="flow-num" style="background: var(--gray-600);">2</div>
+          <div class="flow-num" style="background: var(--content-secondary);">2</div>
           <div class="flow-body">
             <div class="flow-title">Staff enters code into Field App or staff web tool</div>
             <div class="flow-desc">System looks up the voucher, displays details to staff.</div>
           </div>
         </div>
         <div class="flow-step">
-          <div class="flow-num" style="background: var(--gray-600);">3</div>
+          <div class="flow-num" style="background: var(--content-secondary);">3</div>
           <div class="flow-body">
             <div class="flow-title">Staff confirms utilization</div>
             <div class="flow-desc">System marks voucher as used.</div>
