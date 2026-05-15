@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AYANA Rewards — Voucher Redemption & Utilization Flow</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap');
+
+  :root {
+    /* Surface */
+    --surface-primary: #FDFDFA;
+    --surface-secondary: #F6F3E7;
+    --surface-tertiary: #EEEAD9;
+    --surface-inverse: #343331;
+    --surface-positive: #CBEBC5;
+    --surface-destructive: #FFDAD6;
+    --surface-warning: #FFF1D7;
+
+    /* Content */
+    --content-primary: #333333;
+    --content-secondary: #666666;
+    --content-tertiary: #999999;
+    --content-inverse: #FFFFFF;
+    --content-link: #03ADE5;
+    --content-positive: #27723A;
+    --content-destructive: #B51B1A;
+    --content-warning: #81682C;
+
+    /* Stroke */
+    --stroke-primary: #666666;
+    --stroke-secondary: rgba(102,102,102,0.4);
+
+    /* Button */
+    --button-primary: #736B5C;
+    --button-secondary: #D9D5C7;
+
+    /* Legacy aliases for color variant classes */
+    --warm-brown: #7B6B5D;
+
+    /* Fonts */
+    --font-body: 'Inter', sans-serif;
+    --font-display: 'AyanaSans', 'Inter', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font-body);
+    color: var(--content-primary);
+    line-height: 1.5;
+    background: var(--surface-primary);
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 64px 48px;
+  }
+
+  /* --- COVER --- */
+  .cover {
+    min-height: 40vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 0 64px;
+    border-bottom: 3px solid var(--stroke-primary);
+    margin-bottom: 48px;
+  }
+  .cover-eyebrow {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--button-primary);
+    margin-bottom: 16px;
+  }
+  .cover h1 {
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--content-primary);
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+  .cover h2 {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--content-secondary);
+    margin-bottom: 24px;
+    line-height: 1.5;
+  }
+  .cover-meta {
+    font-size: 12px;
+    color: var(--content-tertiary);
+    line-height: 1.5;
+  }
+
+  /* --- SECTIONS --- */
+  .section { margin-bottom: 64px; }
+  .section-num {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--button-primary);
+    margin-bottom: 8px;
+  }
+  h2.section-title {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--content-primary);
+    margin-bottom: 20px;
+    line-height: 1.2;
+  }
+  h3 {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--content-primary);
+    margin: 32px 0 12px;
+    line-height: 1.2;
+  }
+  h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--content-primary);
+    margin: 24px 0 8px;
+  }
+  p { margin-bottom: 12px; }
+  .muted { color: var(--content-secondary); }
+  .small { font-size: 12px; }
+
+  /* --- FLOW DIAGRAMS --- */
+  .flow-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 24px 0;
+  }
+  .flow-step {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    position: relative;
+  }
+  .flow-num {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--button-primary);
+    color: var(--content-inverse);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 14px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+  .flow-body {
+    flex: 1;
+    padding-bottom: 24px;
+  }
+  .flow-step:not(:last-child) .flow-body {
+    border-left: none;
+  }
+  .flow-step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 17px;
+    top: 36px;
+    bottom: 0;
+    width: 2px;
+    background: var(--stroke-secondary);
+  }
+  .flow-title {
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--content-primary);
+    margin-bottom: 4px;
+    line-height: 1.2;
+  }
+  .flow-desc {
+    font-size: 14px;
+    color: var(--content-secondary);
+    line-height: 1.5;
+  }
+
+  /* --- CARDS --- */
+  .card-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 20px 0;
+  }
+  .card-grid.single { grid-template-columns: 1fr; }
+  .card {
+    border-radius: 0;
+    padding: 24px;
+    border: 1px solid var(--stroke-secondary);
+    background: var(--surface-primary);
+  }
+  .card-accent {
+    border-left: 4px solid var(--button-primary);
+  }
+  .card-teal { border-left: 4px solid var(--content-positive); background: #F0F5F0; }
+  .card-purple { border-left: 4px solid var(--warm-brown); background: #F5F0ED; }
+  .card-coral { border-left: 4px solid var(--content-destructive); background: var(--surface-destructive); }
+  .card-amber { border-left: 4px solid var(--content-warning); background: var(--surface-warning); }
+  .card-blue { border-left: 4px solid var(--content-link); background: #E8F4FA; }
+  .card-green { border-left: 4px solid var(--content-positive); }
+  .card-gray { background: var(--surface-secondary); border-color: var(--stroke-secondary); }
+  .card-title {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: var(--content-primary);
+  }
+  .card-desc {
+    font-size: 14px;
+    color: var(--content-secondary);
+    line-height: 1.5;
+  }
+
+  /* --- TAGS --- */
+  .tag {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 12px;
+    border-radius: 24px;
+    margin: 2px 2px;
+    line-height: 1.5;
+  }
+  .tag-purple { background: #EDE8E4; color: var(--warm-brown); }
+  .tag-teal { background: var(--surface-positive); color: var(--content-positive); }
+  .tag-blue { background: #E8F4FA; color: #0580AD; }
+  .tag-amber { background: var(--surface-warning); color: var(--content-warning); }
+  .tag-red { background: var(--surface-destructive); color: var(--content-destructive); }
+  .tag-green { background: var(--surface-positive); color: var(--content-positive); }
+  .tag-gray { background: var(--surface-tertiary); color: var(--content-secondary); }
+
+  /* --- METRIC CARDS --- */
+  .metric-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 20px 0;
+  }
+  .metric {
+    background: var(--surface-secondary);
+    border-radius: 0;
+    padding: 20px 24px;
+    text-align: center;
+    border: 1px solid var(--stroke-secondary);
+  }
+  .metric-num {
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--content-primary);
+    line-height: 1.2;
+  }
+  .metric-label {
+    font-size: 12px;
+    color: var(--content-secondary);
+    margin-top: 4px;
+    line-height: 1.5;
+  }
+
+  /* --- TABLES --- */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  th {
+    background: var(--button-primary);
+    color: var(--content-inverse);
+    font-weight: 600;
+    text-align: left;
+    padding: 12px 16px;
+    font-size: 12px;
+    letter-spacing: 0.02em;
+  }
+  th:first-child { border-radius: 0; }
+  th:last-child { border-radius: 0; }
+  td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--stroke-secondary);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  tr:nth-child(even) td { background: var(--surface-secondary); }
+  tr:last-child td:first-child { border-radius: 0; }
+  tr:last-child td:last-child { border-radius: 0; }
+
+  /* --- COMPARISON --- */
+  .compare-row {
+    display: grid;
+    grid-template-columns: 200px 1fr 1fr;
+    border-bottom: 1px solid var(--stroke-secondary);
+  }
+  .compare-row.header {
+    background: var(--button-primary);
+    color: var(--content-inverse);
+    font-weight: 600;
+    font-size: 12px;
+    border-radius: 0;
+  }
+  .compare-cell {
+    padding: 16px;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .compare-row:not(.header):nth-child(even) { background: var(--surface-secondary); }
+  .compare-row:last-child { border-radius: 0; }
+  .compare-label { font-weight: 600; color: var(--content-primary); }
+
+  /* --- METHOD CARDS (large) --- */
+  .method-card {
+    border-radius: 0;
+    padding: 32px;
+    margin: 16px 0;
+    border: 1px solid var(--stroke-secondary);
+    position: relative;
+    overflow: hidden;
+  }
+  .method-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+  }
+  .method-1::before { background: var(--content-positive); }
+  .method-1 { background: #F0F5F0; }
+  .method-2::before { background: var(--content-link); }
+  .method-2 { background: #E8F4FA; }
+  .method-3::before { background: var(--content-secondary); }
+  .method-3 { background: var(--surface-secondary); }
+  .method-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 24px;
+    margin-bottom: 12px;
+  }
+  .method-1 .method-badge { background: var(--surface-positive); color: var(--content-positive); }
+  .method-2 .method-badge { background: #E8F4FA; color: #0580AD; }
+  .method-name {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--content-primary);
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+  .method-sub {
+    font-size: 14px;
+    color: var(--content-secondary);
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+  .method-detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 16px;
+  }
+  .method-detail {
+    background: rgba(253,253,250,0.7);
+    border-radius: 0;
+    padding: 16px;
+    border: 1px solid var(--stroke-secondary);
+  }
+  .method-detail-label {
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--content-tertiary);
+    margin-bottom: 8px;
+    line-height: 1.5;
+  }
+  .method-detail-content {
+    font-size: 14px;
+    color: var(--content-primary);
+    line-height: 1.5;
+  }
+
+  /* --- THREAT CARDS --- */
+  .threat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 16px 0;
+  }
+  .threat-card {
+    border-radius: 0;
+    padding: 20px 24px;
+    border: 1px solid var(--stroke-secondary);
+  }
+  .threat-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .threat-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .threat-blocked .threat-icon { background: var(--surface-destructive); color: var(--content-destructive); }
+  .threat-accepted .threat-icon { background: var(--surface-warning); color: var(--content-warning); }
+  .threat-name { font-weight: 600; font-size: 14px; }
+
+  /* --- CALLOUT --- */
+  .callout {
+    border-radius: 0;
+    padding: 20px 24px;
+    margin: 20px 0;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .callout-blue { background: #E8F4FA; border: 1px solid var(--stroke-secondary); }
+  .callout-green { background: #F0F5F0; border: 1px solid var(--stroke-secondary); }
+  .callout-amber { background: var(--surface-warning); border: 1px solid var(--stroke-secondary); }
+  .callout-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+  .callout-body { font-size: 14px; line-height: 1.5; }
+
+  /* --- OR DIVIDER --- */
+  .or-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 12px 0;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--content-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .or-divider::before, .or-divider::after {
+    content: '';
+    flex: 1;
+    border-top: 1px dashed var(--stroke-secondary);
+  }
+
+  /* --- ARROW CONNECTOR --- */
+  .arrow-down {
+    display: flex;
+    justify-content: center;
+    padding: 8px 0;
+    color: var(--content-tertiary);
+    font-size: 12px;
+  }
+
+  /* --- DIVIDER --- */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--stroke-secondary);
+    margin: 40px 0;
+  }
+
+  /* --- PAGE BREAK --- */
+  @media print {
+    .page-break { page-break-before: always; }
+    .page { padding: 40px 36px; }
+  }
+
+  /* --- APPENDIX --- */
+  .appendix-table { font-size: 12px; }
+  .appendix-table th { font-size: 12px; padding: 8px 12px; }
+  .appendix-table td { padding: 8px 12px; font-size: 12px; }
+
+  /* --- LIST --- */
+  ul.clean { list-style: none; padding: 0; }
+  ul.clean li {
+    padding: 4px 0 4px 20px;
+    position: relative;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  ul.clean li::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--button-primary);
+    position: absolute;
+    left: 0;
+    top: 11px;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ==================== COVER ==================== -->
+  <div class="cover">
+    <div class="cover-eyebrow">AYANA Rewards</div>
+    <h1>Voucher Redemption &<br>Utilization Flow</h1>
+    <h2>Proposed Design Specification</h2>
+    <div class="cover-meta">May 2026 &nbsp;|&nbsp; Draft for Review &nbsp;|&nbsp; Confidential</div>
+  </div>
+
+  <!-- ==================== PART 1: VOUCHER REDEMPTION ==================== -->
+  <div class="section">
+    <div class="section-num">Part 1</div>
+    <h2 class="section-title">Voucher Redemption</h2>
+
+    <p>This section covers what information the member provides when redeeming a voucher — the "for me or others" choice and the additional info form per category.</p>
+
+    <h3>1.1 For Me or For Others</h3>
+
+    <p>The member selects whether the voucher is for themselves or someone else. This choice is <strong>locked at redemption</strong> — changing it after would invalidate any redemption email already sent to the recipient.</p>
+
+    <table>
+      <tr>
+        <th style="width: 160px;">Field</th>
+        <th>Rule</th>
+      </tr>
+      <tr>
+        <td><strong>Self / Others</strong></td>
+        <td>Mandatory. Locked once submitted — cannot be switched after redemption.</td>
+      </tr>
+      <tr>
+        <td><strong>Receiver name</strong></td>
+        <td>Mandatory if "for others." Locked once submitted.</td>
+      </tr>
+      <tr>
+        <td><strong>Receiver email</strong></td>
+        <td>Optional. Can only be filled at redemption — no fill-later. If provided, triggers a redemption email with the voucher to the recipient. Locked once submitted.</td>
+      </tr>
+    </table>
+
+    <div class="callout callout-blue">
+      <div class="callout-icon">i</div>
+      <div class="callout-body">
+        <strong>Business & Travel – Points Exchange:</strong> No separate self/others step. The member enters the external account ID to receive the points (e.g. Krisflyer member number). This could be their own account or someone else's — the flow is the same either way, since the member just inputs the target account ID in the form field.
+      </div>
+    </div>
+
+    <h3>1.2 Additional Info</h3>
+
+    <p>All categories have a Notes field with <strong>dynamic placeholder text</strong> tailored to the category (e.g. preferred dates for hotels, dietary preferences for dining). This is frontend-only — the form structure stays the same, only the placeholder string changes.</p>
+
+    <h4>On-site utilization vouchers (Dining, Wellness & Rec, Gift – restaurant, Retail collection, B&T – Others)</h4>
+
+    <p>Optional notes at redemption only — no fill-later. Placeholder text varies by category (e.g. Dining: <em>"e.g. Any dietary requirements or preferences"</em>; Retail: <em>"e.g. Preferred pickup date or location"</em>).</p>
+
+    <table>
+      <tr>
+        <th>Category</th>
+        <th>Fields</th>
+        <th>When</th>
+      </tr>
+      <tr>
+        <td>Dining</td>
+        <td><span class="tag tag-gray">Notes (optional, dynamic placeholder)</span></td>
+        <td>At redemption only</td>
+      </tr>
+      <tr>
+        <td>Wellness & Recreation</td>
+        <td><span class="tag tag-gray">Notes (optional, dynamic placeholder)</span></td>
+        <td>At redemption only</td>
+      </tr>
+      <tr>
+        <td>Gift voucher – restaurant</td>
+        <td><span class="tag tag-gray">Notes (optional, dynamic placeholder)</span></td>
+        <td>At redemption only</td>
+      </tr>
+      <tr>
+        <td>Retail collection</td>
+        <td><span class="tag tag-gray">Notes (optional, dynamic placeholder)</span></td>
+        <td>At redemption only</td>
+      </tr>
+      <tr>
+        <td>Business & Travel – Others</td>
+        <td><span class="tag tag-gray">Notes (optional, dynamic placeholder)</span></td>
+        <td>At redemption only</td>
+      </tr>
+    </table>
+
+    <h4>Hotel vouchers (Hotel, Gift voucher – hotel)</h4>
+
+    <p>Single Notes field with dynamic placeholder (e.g. <em>"e.g. Preferred stay date, number of rooms, or any special requests"</em>). No structured date/room fields — those details are handled during the booking/fulfillment process.</p>
+
+    <table>
+      <tr>
+        <th>Category</th>
+        <th>Fields</th>
+        <th>When</th>
+      </tr>
+      <tr>
+        <td>Hotel</td>
+        <td><span class="tag tag-gray">Notes (optional, dynamic placeholder)</span></td>
+        <td>At redemption only</td>
+      </tr>
+      <tr>
+        <td>Gift voucher – hotel</td>
+        <td><span class="tag tag-gray">Notes (optional, dynamic placeholder)</span></td>
+        <td>At redemption only</td>
+      </tr>
+    </table>
+
+    <h4>Business & Travel – Points Exchange</h4>
+
+    <p>Requires Account ID, Name, and optional Notes at redemption (no fill-later). No self/others choice. The form shows <strong>dynamic helper text per product</strong> — e.g. Flow Coins: <em>"Don't have a Flow account? No worries — enter your email and we'll set it up for you."</em> Krisflyer shows standard labels only.</p>
+
+    <table>
+      <tr>
+        <th>Category</th>
+        <th>Fields</th>
+        <th>When</th>
+        <th>Note</th>
+      </tr>
+      <tr>
+        <td>B&T – Points Exchange</td>
+        <td><span class="tag tag-purple">Account ID</span> <span class="tag tag-purple">Name</span> <span class="tag tag-gray">Notes (optional)</span></td>
+        <td>Required at redemption</td>
+        <td>Dynamic helper text per product</td>
+      </tr>
+    </table>
+
+    <h3>1.3 Post-Redemption CTA</h3>
+
+    <p>The voucher detail page shows a CTA that opens a prefilled email to the Rewards team — visible to both the member and the recipient (via the redemption email link).</p>
+
+    <div class="card-grid">
+      <div class="card card-teal">
+        <div class="card-title">Hotel / Gift voucher – hotel</div>
+        <div class="card-desc">
+          CTA label: <strong>"Ready to book? Contact us"</strong><br>
+          These categories need reservation coordination (dates, rooms, special requests). The CTA opens a prefilled email to the reservations/Rewards inbox.
+        </div>
+      </div>
+      <div class="card card-blue">
+        <div class="card-title">Dining / Wellness / Gift – restaurant / Retail / B&T – Others</div>
+        <div class="card-desc">
+          CTA label: <strong>"Questions about this voucher? Contact us"</strong><br>
+          Lighter wording — these are typically walk-in/on-site vouchers. The CTA serves as a general support channel.
+        </div>
+      </div>
+    </div>
+
+    <table>
+      <tr>
+        <th style="width: 140px;">Email field</th>
+        <th>Content</th>
+      </tr>
+      <tr>
+        <td><strong>To</strong></td>
+        <td>Dedicated Rewards inbox (e.g. rewards@ayana.com)</td>
+      </tr>
+      <tr>
+        <td><strong>Subject</strong></td>
+        <td>Voucher Inquiry — [Voucher Code] [Voucher Name]</td>
+      </tr>
+      <tr>
+        <td><strong>Body</strong></td>
+        <td>Prefilled with: member name, membership tier, voucher type, quantity, voucher code. For "for others" recipients, the body identifies them as the recipient and includes the gifter's name.</td>
+      </tr>
+    </table>
+
+    <div class="callout callout-blue">
+      <div class="callout-icon">i</div>
+      <div class="callout-body">
+        <strong>Who sees it:</strong> For "for me" vouchers, the member sees the CTA on their voucher detail page. For "for others" vouchers, both the member (in their redeemed voucher list) and the recipient (on the voucher page from the redemption email) see the CTA — with slightly different prefilled email body text so the Rewards team knows who they're speaking with.
+      </div>
+    </div>
+
+    <div class="callout callout-amber">
+      <div class="callout-icon">*</div>
+      <div class="callout-body">
+        <strong>Exception — B&T – Points Exchange:</strong> No CTA. Points Exchange vouchers are processed automatically once the account details are submitted at redemption. There is nothing to coordinate after.
+      </div>
+    </div>
+
+    <h3>1.4 Redemption Form Mockups</h3>
+
+    <p>Five key form variations, each using a single Notes field with dynamic placeholder text per category.</p>
+
+    <!-- MOCKUP ROW 1: For Me (Dining) + For Others (Dining) -->
+    <div style="display: flex; gap: 24px; flex-wrap: wrap; margin: 20px 0;">
+
+      <!-- MOCKUP 1: For Me (Dining) -->
+      <div style="width: 300px; border: 1px solid var(--stroke-secondary); overflow: hidden; background: var(--surface-primary); font-family: var(--font-body); font-size: 14px; font-weight: 500;">
+        <div style="padding: 14px 20px; border-bottom: 1px solid var(--stroke-secondary); text-align: center; font-size: 12px; letter-spacing: 0.18em; font-weight: 600; color: var(--content-primary);">A Y A N A<br><span style="font-size: 8px; letter-spacing: 0.22em; font-weight: 500; color: var(--content-tertiary);">REWARDS</span></div>
+        <div style="padding: 16px 20px;">
+          <div style="background: var(--surface-secondary); padding: 14px 16px; margin-bottom: 16px;">
+            <div style="font-weight: 600; font-size: 14px; color: var(--content-primary); margin-bottom: 4px;">Breakfast at Terrace Restaurant for 1 Pax</div>
+            <div style="font-size: 12px; color: var(--content-secondary);">2,000 points · 3 vouchers</div>
+          </div>
+          <div style="background: var(--surface-secondary); padding: 14px 16px; margin-bottom: 16px;">
+            <div style="font-weight: 600; font-size: 12px; color: var(--content-primary); margin-bottom: 8px;">Redeem for whom?</div>
+            <div style="display: flex; gap: 24px;">
+              <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--content-primary);"><span style="width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--button-primary); display: flex; align-items: center; justify-content: center;"><span style="width: 8px; height: 8px; border-radius: 50%; background: var(--button-primary);"></span></span>For me</label>
+              <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--content-secondary);"><span style="width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--stroke-secondary);"></span>For other</label>
+            </div>
+          </div>
+          <div style="font-size: 12px; font-weight: 600; color: var(--content-primary); margin-bottom: 4px;">Additional Notes</div>
+          <div style="border: 1px solid var(--stroke-secondary); padding: 8px 12px; font-size: 12px; color: var(--content-tertiary); min-height: 48px; margin-bottom: 20px;">e.g. Tell us your preferred dates if any, or any other preferences (dietary etc)</div>
+        </div>
+        <div style="padding: 14px 20px; border-top: 1px solid var(--stroke-secondary); display: flex; align-items: center; justify-content: space-between;">
+          <div><span style="font-size: 12px; color: var(--content-secondary);">Total Points</span><br><span style="font-weight: 600; font-size: 16px; color: var(--content-primary);">6,000</span></div>
+          <div style="background: var(--button-primary); color: var(--content-inverse); padding: 12px 32px; font-weight: 500; font-size: 14px; letter-spacing: 0.04em;">REDEEM</div>
+        </div>
+      </div>
+
+      <!-- MOCKUP 2: For Others (Dining) -->
+      <div style="width: 300px; border: 1px solid var(--stroke-secondary); overflow: hidden; background: var(--surface-primary); font-family: var(--font-body); font-size: 14px; font-weight: 500;">
+        <div style="padding: 14px 20px; border-bottom: 1px solid var(--stroke-secondary); text-align: center; font-size: 12px; letter-spacing: 0.18em; font-weight: 600; color: var(--content-primary);">A Y A N A<br><span style="font-size: 8px; letter-spacing: 0.22em; font-weight: 500; color: var(--content-tertiary);">REWARDS</span></div>
+        <div style="padding: 16px 20px;">
+          <div style="background: var(--surface-secondary); padding: 14px 16px; margin-bottom: 16px;">
+            <div style="font-weight: 600; font-size: 14px; color: var(--content-primary); margin-bottom: 4px;">Breakfast at Terrace Restaurant for 1 Pax</div>
+            <div style="font-size: 12px; color: var(--content-secondary);">2,000 points · 1 voucher</div>
+          </div>
+          <div style="font-weight: 600; font-size: 12px; color: var(--content-primary); margin-bottom: 10px;">Redemption Info</div>
+          <div style="background: var(--surface-secondary); padding: 14px 16px; margin-bottom: 16px;">
+            <div style="font-weight: 600; font-size: 12px; color: var(--content-primary); margin-bottom: 8px;">Redeem for whom?</div>
+            <div style="display: flex; gap: 24px; margin-bottom: 14px;">
+              <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--content-secondary);"><span style="width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--stroke-secondary);"></span>For me</label>
+              <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--content-primary);"><span style="width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--button-primary); display: flex; align-items: center; justify-content: center;"><span style="width: 8px; height: 8px; border-radius: 50%; background: var(--button-primary);"></span></span>For other</label>
+            </div>
+            <div style="font-size: 12px; font-weight: 600; color: var(--content-primary); margin-bottom: 4px;">Receiver Name</div>
+            <div style="border: 1px solid var(--stroke-secondary); padding: 8px 12px; font-size: 12px; color: var(--content-primary); margin-bottom: 12px; background: var(--surface-primary);">Sarah Johnson</div>
+            <div style="font-size: 12px; font-weight: 600; color: var(--content-primary); margin-bottom: 4px;">Receiver Email (Optional)</div>
+            <div style="border: 1px solid var(--stroke-secondary); padding: 8px 12px; font-size: 12px; color: var(--content-primary); margin-bottom: 4px; background: var(--surface-primary);">sarah.j@email.com</div>
+            <div style="font-size: 12px; color: var(--content-tertiary);">We'll send the Redemption Voucher to this email.</div>
+          </div>
+          <div style="font-size: 12px; font-weight: 600; color: var(--content-primary); margin-bottom: 4px;">Additional Notes</div>
+          <div style="border: 1px solid var(--stroke-secondary); padding: 8px 12px; font-size: 12px; color: var(--content-tertiary); min-height: 48px; margin-bottom: 20px;">e.g. Tell us your preferred dates if any, or any other preferences (dietary etc)</div>
+        </div>
+        <div style="padding: 14px 20px; border-top: 1px solid var(--stroke-secondary); display: flex; align-items: center; justify-content: space-between;">
+          <div><span style="font-size: 12px; color: var(--content-secondary);">Total Points</span><br><span style="font-weight: 600; font-size: 16px; color: var(--content-primary);">2,000</span></div>
+          <div style="background: var(--button-primary); color: var(--content-inverse); padding: 12px 32px; font-weight: 500; font-size: 14px; letter-spacing: 0.04em;">REDEEM</div>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="small muted" style="margin-top: 0;">Left: Dining redemption (for me) — single Notes field with dynamic placeholder. Right: Dining redemption (for others) — receiver fields + Notes with same placeholder.</p>
+
+    <!-- MOCKUP ROW 2: Hotel (dynamic placeholder) -->
+    <div style="display: flex; gap: 24px; flex-wrap: wrap; margin: 20px 0;">
+
+      <!-- MOCKUP 3: Hotel voucher (For Me) — dynamic placeholder -->
+      <div style="width: 300px; border: 1px solid var(--stroke-secondary); overflow: hidden; background: var(--surface-primary); font-family: var(--font-body); font-size: 14px; font-weight: 500;">
+        <div style="padding: 14px 20px; border-bottom: 1px solid var(--stroke-secondary); text-align: center; font-size: 12px; letter-spacing: 0.18em; font-weight: 600; color: var(--content-primary);">A Y A N A<br><span style="font-size: 8px; letter-spacing: 0.22em; font-weight: 500; color: var(--content-tertiary);">REWARDS</span></div>
+        <div style="padding: 16px 20px;">
+          <div style="background: var(--surface-secondary); padding: 14px 16px; margin-bottom: 16px;">
+            <div style="font-weight: 600; font-size: 14px; color: var(--content-primary); margin-bottom: 4px;">One Night Stay at Resort View Room</div>
+            <div style="font-size: 12px; color: var(--content-secondary);">15,000 points · 2 vouchers</div>
+          </div>
+          <div style="background: var(--surface-secondary); padding: 14px 16px; margin-bottom: 16px;">
+            <div style="font-weight: 600; font-size: 12px; color: var(--content-primary); margin-bottom: 8px;">Redeem for whom?</div>
+            <div style="display: flex; gap: 24px;">
+              <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--content-primary);"><span style="width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--button-primary); display: flex; align-items: center; justify-content: center;"><span style="width: 8px; height: 8px; border-radius: 50%; background: var(--button-primary);"></span></span>For me</label>
+              <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--content-secondary);"><span style="width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--stroke-secondary);"></span>For other</label>
+            </div>
+          </div>
+          <div style="font-size: 12px; font-weight: 600; color: var(--content-primary); margin-bottom: 4px;">Additional Notes</div>
+          <div style="border: 1px solid var(--stroke-secondary); padding: 8px 12px; font-size: 12px; color: var(--content-tertiary); min-height: 48px; margin-bottom: 20px;">e.g. Preferred stay date, number of rooms, or any special requests</div>
+        </div>
+        <div style="padding: 14px 20px; border-top: 1px solid var(--stroke-secondary); display: flex; align-items: center; justify-content: space-between;">
+          <div><span style="font-size: 12px; color: var(--content-secondary);">Total Points</span><br><span style="font-weight: 600; font-size: 16px; color: var(--content-primary);">30,000</span></div>
+          <div style="background: var(--button-primary); color: var(--content-inverse); padding: 12px 32px; font-weight: 500; font-size: 14px; letter-spacing: 0.04em;">REDEEM</div>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="small muted" style="margin-top: 0;">Hotel voucher — dynamic placeholder guides the member to share stay date, room count, or special requests. Structured fields (Stay Date, # Rooms) removed; handled during booking/fulfillment instead.</p>
+
+    <!-- MOCKUP ROW 3: Points Exchange (Flow with helper) + Points Exchange (Krisflyer without helper) -->
+    <div style="display: flex; gap: 24px; flex-wrap: wrap; margin: 20px 0;">
+
+      <!-- MOCKUP 4: Points Exchange — Flow Coins (with helper text) -->
+      <div style="width: 300px; border: 1px solid var(--stroke-secondary); overflow: hidden; background: var(--surface-primary); font-family: var(--font-body); font-size: 14px; font-weight: 500;">
+        <div style="padding: 14px 20px; border-bottom: 1px solid var(--stroke-secondary); text-align: center; font-size: 12px; letter-spacing: 0.18em; font-weight: 600; color: var(--content-primary);">A Y A N A<br><span style="font-size: 8px; letter-spacing: 0.22em; font-weight: 500; color: var(--content-tertiary);">REWARDS</span></div>
+        <div style="padding: 16px 20px;">
+          <div style="background: var(--surface-secondary); padding: 14px 16px; margin-bottom: 16px;">
+            <div style="font-weight: 600; font-size: 14px; color: var(--content-primary); margin-bottom: 4px;">Convert to Flow Coins</div>
+            <div style="font-size: 12px; color: var(--content-secondary);">5,000 points · 1 voucher</div>
+          </div>
+          <div style="font-weight: 600; font-size: 12px; color: var(--content-primary); margin-bottom: 10px;">Account Details <span style="font-weight: 500; color: var(--content-destructive); font-size: 12px;">(Required)</span></div>
+          <div style="font-size: 12px; font-weight: 600; color: var(--content-primary); margin-bottom: 4px;">Account ID*</div>
+          <div style="border: 1px solid var(--stroke-secondary); padding: 8px 12px; font-size: 12px; color: var(--content-primary); margin-bottom: 4px;">user@email.com</div>
+          <div style="font-size: 12px; color: var(--content-link); margin-bottom: 12px;">Don't have a Flow account? No worries — enter your email and we'll set it up for you.</div>
+          <div style="font-size: 12px; font-weight: 600; color: var(--content-primary); margin-bottom: 4px;">Name*</div>
+          <div style="border: 1px solid var(--stroke-secondary); padding: 8px 12px; font-size: 12px; color: var(--content-primary); margin-bottom: 14px;">John Doe</div>
+          <div style="font-size: 12px; font-weight: 600; color: var(--content-primary); margin-bottom: 4px;">Notes</div>
+          <div style="border: 1px solid var(--stroke-secondary); padding: 8px 12px; font-size: 12px; color: var(--content-tertiary); min-height: 36px;">e.g. Any additional information</div>
+        </div>
+        <div style="padding: 14px 20px; border-top: 1px solid var(--stroke-secondary); display: flex; align-items: center; justify-content: space-between;">
+          <div><span style="font-size: 12px; color: var(--content-secondary);">Total Points</span><br><span style="font-weight: 600; font-size: 16px; color: var(--content-primary);">5,000</span></div>
+          <div style="background: var(--button-primary); color: var(--content-inverse); padding: 12px 32px; font-weight: 500; font-size: 14px; letter-spacing: 0.04em;">REDEEM</div>
+        </div>
+      </div>
+
+      <!-- MOCKUP 5: Points Exchange — Krisflyer (no helper text) -->
+      <div style="width: 300px; border: 1px solid var(--stroke-secondary); overflow: hidden; background: var(--surface-primary); font-family: var(--font-body); font-size: 14px; font-weight: 500;">
+        <div style="padding: 14px 20px; border-bottom: 1px solid var(--stroke-secondary); text-align: center; font-size: 12px; letter-spacing: 0.18em; font-weight: 600; color: var(--content-primary);">A Y A N A<br><span style="font-size: 8px; letter-spacing: 0.22em; font-weight: 500; color: var(--content-tertiary);">REWARDS</span></div>
+        <div style="padding: 16px 20px;">
+          <div style="background: var(--surface-secondary); padding: 14px 16px; margin-bottom: 16px;">
+            <div style="font-weight: 600; font-size: 14px; color: var(--content-primary); margin-bottom: 4px;">Convert to Krisflyer Miles</div>
+            <div style="font-size: 12px; color: var(--content-secondary);">8,000 points · 1 voucher</div>
+          </div>
+          <div style="font-weight: 600; font-size: 12px; color: var(--content-primary); margin-bottom: 10px;">Account Details <span style="font-weight: 500; color: var(--content-destructive); font-size: 12px;">(Required)</span></div>
+          <div style="font-size: 12px; font-weight: 600; color: var(--content-primary); margin-bottom: 4px;">Account ID*</div>
+          <div style="border: 1px solid var(--stroke-secondary); padding: 8px 12px; font-size: 12px; color: var(--content-primary); margin-bottom: 14px;">1234567890</div>
+          <div style="font-size: 12px; font-weight: 600; color: var(--content-primary); margin-bottom: 4px;">Name*</div>
+          <div style="border: 1px solid var(--stroke-secondary); padding: 8px 12px; font-size: 12px; color: var(--content-primary); margin-bottom: 14px;">John Doe</div>
+          <div style="font-size: 12px; font-weight: 600; color: var(--content-primary); margin-bottom: 4px;">Notes</div>
+          <div style="border: 1px solid var(--stroke-secondary); padding: 8px 12px; font-size: 12px; color: var(--content-tertiary); min-height: 36px;">e.g. Any additional information</div>
+        </div>
+        <div style="padding: 14px 20px; border-top: 1px solid var(--stroke-secondary); display: flex; align-items: center; justify-content: space-between;">
+          <div><span style="font-size: 12px; color: var(--content-secondary);">Total Points</span><br><span style="font-weight: 600; font-size: 16px; color: var(--content-primary);">8,000</span></div>
+          <div style="background: var(--button-primary); color: var(--content-inverse); padding: 12px 32px; font-weight: 500; font-size: 14px; letter-spacing: 0.04em;">REDEEM</div>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="small muted" style="margin-top: 0;">Left: Flow Coins — dynamic helper text under Account ID for users who may not have a Flow account. Right: Krisflyer Miles — same form structure, no helper text (user is expected to have an account). No self/others choice for either.</p>
+
+  </div>
+
+  <hr class="divider">
+
+  <!-- ==================== PART 2: VOUCHER UTILIZATION ==================== -->
+  <div class="section" style="margin-bottom: 24px;">
+    <div class="section-num">Part 2</div>
+    <h2 class="section-title">Voucher Utilization</h2>
+    <p>Utilization is the process of using a redeemed voucher at an outlet or having it fulfilled by the Rewards admin.</p>
+  </div>
+
+  <!-- ==================== SECTION 2.1: HOW UTILIZATION WORKS TODAY ==================== -->
+  <div class="section">
+    <div class="section-num">Section 2.1</div>
+    <h2 class="section-title">How Voucher Utilization Works Today</h2>
+
+    <p>Currently, the member shows their voucher code and staff searches for it in the Rewards system to mark it as used. No QR scanning, no Field App integration. This works but has limitations: the code is exposed in plain text (fraud risk), there's no identity verification, and it relies on manual staff lookup.</p>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ==================== SECTION 2.2: PROPOSED UTILIZATION FLOW ==================== -->
+  <div class="section">
+    <div class="section-num">Section 2.2</div>
+    <h2 class="section-title">Proposed Utilization Flow</h2>
+
+    <p>The proposed flow uses <strong>2 primary methods + 1 monitored fallback</strong>, all staff-initiated. The method depends on: outlet capability (Field App availability), user type (self vs others), and guest status (staying vs non-staying).</p>
+
+    <h3>Voucher Nature Classification</h3>
+    <p>Admin-fulfilled vouchers are handled via Ops Dashboard; on-site vouchers require staff action at the outlet.</p>
+
+    <table>
+      <tr>
+        <th style="width: 160px;">Nature</th>
+        <th>Description</th>
+        <th style="width: 260px;">Categories</th>
+      </tr>
+      <tr>
+        <td><span class="tag tag-purple">Admin-fulfilled</span></td>
+        <td>No on-site utilization needed. Rewards admin processes via Ops Dashboard after service is delivered.</td>
+        <td>
+          <span class="tag tag-purple">Hotel</span>
+          <span class="tag tag-purple">Business & Travel – Points Exchange</span>
+          <span class="tag tag-purple">Gift voucher – hotel</span> <span class="small muted">(for others &rarr; gift certificate)</span>
+        </td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-teal">On-site utilization</span></td>
+        <td>Guest presents or staff identifies the voucher at the outlet. Used as payment method or entitlement at point of consumption.</td>
+        <td>
+          <span class="tag tag-teal">Dining</span>
+          <span class="tag tag-teal">Wellness & Recreation</span>
+          <span class="tag tag-teal">Gift voucher – restaurant</span>
+          <span class="tag tag-teal">Retail collection</span>
+          <span class="tag tag-teal">Gift voucher – hotel</span> <span class="small muted">(self, as payment)</span>
+          <span class="tag tag-teal">Business & Travel – Others</span>
+        </td>
+      </tr>
+    </table>
+
+    <h3>Utilization Methods</h3>
+    <p>Decision tree: staying guest + Field App → room lookup (Method 1), otherwise → QR scan (Method 2), QR not possible → manual code entry (Method 3, fallback).</p>
+
+    <!-- METHOD 1 -->
+    <div class="method-card method-1">
+      <div class="method-badge">Method 1 &nbsp;·&nbsp; In-house Guest Flow</div>
+      <div class="method-name">Room / Name Lookup</div>
+      <div class="method-sub">For staying guests at properties with Field App. Guest does not need their phone.</div>
+
+      <div class="flow-container">
+        <div class="flow-step">
+          <div class="flow-num" style="background: var(--content-positive);">1</div>
+          <div class="flow-body">
+            <div class="flow-title">Guest arrives at outlet</div>
+            <div class="flow-desc">Identifies themselves verbally or staff recognizes them.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num" style="background: var(--content-positive);">2</div>
+          <div class="flow-body">
+            <div class="flow-title">Staff searches by room number or name</div>
+            <div class="flow-desc">Using the Field App. System cross-checks with PMS to verify the guest is currently checked in.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num" style="background: var(--content-positive);">3</div>
+          <div class="flow-body">
+            <div class="flow-title">Field App shows guest's available vouchers</div>
+            <div class="flow-desc">Only vouchers valid for that outlet are displayed.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num" style="background: var(--content-positive);">4</div>
+          <div class="flow-body">
+            <div class="flow-title">Staff selects voucher, guest confirms, done</div>
+            <div class="flow-desc">One tap to mark as utilized. System records the transaction.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="method-detail-grid">
+        <div class="method-detail">
+          <div class="method-detail-label">Requirements</div>
+          <div class="method-detail-content">
+            Field App with AYANA Rewards voucher integration + guest data from PMS
+          </div>
+        </div>
+        <div class="method-detail">
+          <div class="method-detail-label">Applicable to</div>
+          <div class="method-detail-content">
+            Staying guests (self-use) at properties with Field App
+          </div>
+        </div>
+        <div class="method-detail">
+          <div class="method-detail-label">Identity verification</div>
+          <div class="method-detail-content">
+            PMS confirms room occupant. Hotel check-in already verified guest ID.
+          </div>
+        </div>
+        <div class="method-detail">
+          <div class="method-detail-label">Anti-fraud</div>
+          <div class="method-detail-content">
+            Staff can see voucher details after lookup, but access is scoped to verified in-house guests only — staff cannot browse arbitrary member vouchers. The primary control is PMS verification, not code secrecy.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="or-divider">fallback when method 1 is not available</div>
+
+    <!-- METHOD 2 -->
+    <div class="method-card method-2">
+      <div class="method-badge">Method 2 &nbsp;·&nbsp; Standard Flow</div>
+      <div class="method-name">QR Scan</div>
+      <div class="method-sub">Universal method for all other scenarios. Covers non-staying guests, recipients (for others), and properties without PMS integration.</div>
+
+      <div class="flow-container">
+        <div class="flow-step">
+          <div class="flow-num" style="background: var(--content-link);">1</div>
+          <div class="flow-body">
+            <div class="flow-title">Guest opens their voucher QR</div>
+            <div class="flow-desc">
+              <strong>Members:</strong> from their Rewards account (requires login).<br>
+              <strong>Recipients (for others):</strong> from the redemption email link (unique per recipient, dynamically generated).
+            </div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num" style="background: var(--content-link);">2</div>
+          <div class="flow-body">
+            <div class="flow-title">Staff scans the QR</div>
+            <div class="flow-desc">Using the Field App or the staff web tool (for non-Field-App outlets). The QR contains a secure token — not the plain voucher code.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num" style="background: var(--content-link);">3</div>
+          <div class="flow-body">
+            <div class="flow-title">System validates and shows voucher details</div>
+            <div class="flow-desc">Decrypts/verifies the token, checks voucher is valid and not yet used, displays details to staff.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num" style="background: var(--content-link);">4</div>
+          <div class="flow-body">
+            <div class="flow-title">Staff confirms utilization</div>
+            <div class="flow-desc">One tap. System marks voucher as used. Done.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="method-detail-grid">
+        <div class="method-detail">
+          <div class="method-detail-label">Requirements</div>
+          <div class="method-detail-content">
+            Field App or staff web tool with camera access. HTTPS required.
+          </div>
+        </div>
+        <div class="method-detail">
+          <div class="method-detail-label">Applicable to</div>
+          <div class="method-detail-content">
+            All guests at all properties — non-staying guests, recipients, and staying guests where Rewards voucher integration is not yet live.
+          </div>
+        </div>
+        <div class="method-detail">
+          <div class="method-detail-label">Identity verification</div>
+          <div class="method-detail-content">
+            Secure token in QR proves access to member account or recipient email. Cannot be generated without login/email access.
+          </div>
+        </div>
+        <div class="method-detail">
+          <div class="method-detail-label">Anti-fraud</div>
+          <div class="method-detail-content">
+            The QR contains a secure token that cannot be generated from the voucher code alone — knowing or sharing the code is not enough to utilize the voucher. Staff may see the voucher code on the details screen, but it is not useful without the token.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="or-divider">fallback when method 2 is not possible</div>
+
+    <!-- METHOD 3 -->
+    <div class="method-card method-3">
+      <div class="method-badge" style="background: var(--surface-tertiary); color: var(--content-secondary);">Method 3 &nbsp;·&nbsp; Fallback</div>
+      <div class="method-name">Manual Code Entry</div>
+      <div class="method-sub">For edge cases where QR scanning is not possible (camera not working, guest unable to show voucher on phone). Staff enters the voucher code manually.</div>
+
+      <div class="flow-container">
+        <div class="flow-step">
+          <div class="flow-num" style="background: var(--content-secondary);">1</div>
+          <div class="flow-body">
+            <div class="flow-title">Guest provides voucher code</div>
+            <div class="flow-desc">Guest reads the code aloud from their phone/email, or shows the code on screen without QR.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num" style="background: var(--content-secondary);">2</div>
+          <div class="flow-body">
+            <div class="flow-title">Staff enters code into Field App or staff web tool</div>
+            <div class="flow-desc">System looks up the voucher, displays details to staff.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num" style="background: var(--content-secondary);">3</div>
+          <div class="flow-body">
+            <div class="flow-title">Staff confirms utilization</div>
+            <div class="flow-desc">System marks voucher as used.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout callout-amber" style="margin-top: 12px; margin-bottom: 0;">
+        <div class="callout-icon">*</div>
+        <div class="callout-body">
+          <strong>Fraud note:</strong> Weakest method since the plain voucher code is exposed. Mitigations: <strong>(1)</strong> monitor all utilizations via this method, <strong>(2)</strong> restrict access to senior staff roles. Second-factor verification (e.g. OTP) can be added later if needed.
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+</body>
+</html>
